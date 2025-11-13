@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popup com Input</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+    <button onclick="abrirPopup()">Abrir Formulário</button>
+
+    <script>
+        function abrirPopup() {
+            Swal.fire({
+                title: 'Preencha os dados',
+                html: `
+                    <label for="nome">Nome:</label>
+                    <input id="nome" class="swal2-input" placeholder="Digite o seu nome">
+
+                    <label for="email">Email:</label>
+                    <input id="email" class="swal2-input" type="email" placeholder="Digite o seu email">
+                `,
+                confirmButtonText: 'Enviar',
+                showCancelButton: true,
+                cancelButtonText: 'Cancelar',
+                preConfirm: () => {
+                    const nome = document.getElementById('nome').value;
+                    const email = document.getElementById('email').value;
+
+                    if (!nome || !email) {
+                        Swal.showValidationMessage('Preencha todos os campos!');
+                        return false;
+                    }
+
+                    return { nome, email };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(`Nome: ${result.value.nome}\nEmail: ${result.value.email}`);
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>

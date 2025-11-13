@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pagina RecuperarPass1</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/styles/overlayscrollbars.min.css"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../../css/adminlte.css" />
+    <link rel="stylesheet" href="../../css/login.css" />
+
+    <style>
+      body.login-page {
+        background-image: url("../../assets/MCM_Banner_06.webp"); /* Altere o caminho da imagem aqui */
+        background-size: cover; /* Faz a imagem cobrir toda a tela */
+        background-position: center center; /* Centraliza a imagem */
+        background-repeat: no-repeat; /* Não repete a imagem */
+        min-height: 100vh; /* Garante que o fundo ocupe toda a altura da tela */
+      }
+    </style>
+  </head>
+
+  <body class="login-page bg-body-secondary">
+    <div class="login-box">
+      <div class="card card-outline card-primary">
+        <div class="card-header text-center">
+          <img
+            src="../../assets/MACOSMI_LOGO_25_new.png"
+            alt="Logo"
+            style="width: auto; height: auto"
+          />
+        </div>
+        <div class="card-body login-card-body">
+          <form action="#" method="post">
+            <div class="input-group mb-3">
+              <div class="form-floating flex-grow-1">
+                <input
+                  type="email"
+                  class="form-control"
+                  id="loginEmail"
+                  placeholder="Email"
+                  required
+                />
+                <label for="loginEmail" data-translate="loginEmail"
+                  >Email</label
+                >
+              </div>
+              <div class="input-group-text"><i class="bi bi-envelope"></i></div>
+            </div>
+            <div class="d-grid gap-2 mb-3">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                data-translate="pedirPassword"
+              >
+                Pedir Nova Password
+              </button>
+            </div>
+          </form>
+          <p class="text-center">
+            <a href="#" class="recuperar-password" data-translate="entrar"
+              >Login.</a
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-logo">
+      <img src="../../assets/logo_Softideia_softgi.png" alt="Logo" />
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/browser/overlayscrollbars.browser.es6.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="../../js/login.js"></script>
+    <script src="../../js/traducoes.js"></script>
+  </body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
+    />
+    <title>RSM SubContratos</title>
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- DevExpress -->
+    <link
+      rel="stylesheet"
+      href="https://cdn3.devexpress.com/jslib/24.2.6/css/dx.material.blue.light.css"
+    />
+    <script src="https://cdn3.devexpress.com/jslib/24.2.6/js/dx.all.js"></script>
+
+    <!-- Web API Store -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/devextreme-aspnet-data/5.0.0/dx.aspnet.data.min.js"></script>
+
+    <!--ESTILO REVER BEM-->
+    <script src="https://cdn3.devexpress.com/jslib/24.2.6/js/localization/dx.messages.pt.js"></script>
+    <script src="https://cdn3.devexpress.com/jslib/24.2.6/js/localization/dx.messages.en.js"></script>
+    <script src="https://cdn3.devexpress.com/jslib/24.2.6/js/localization/dx.messages.fr.js"></script>
+
+    <!-- Configuração DevExpress -->
+    <script src="../../../devexpress/devexpress.js"></script>
+
+    <script src="/Projeto/Frontend/js/config.js"></script>
+
+    <script src="rsm_subcontratosdetalhes.js" defer></script>
+
+    <!--LAYOUT-->
+    <!-- Ícones -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+
+    <!-- Plugins e bibliotecas -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css"
+    />
+
+    <!-- Estilo principal -->
+    <link rel="stylesheet" href="../../../css/adminlte.css" />
+  </head>
+
+  <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+    <div class="app-wrapper">
+      <!--       <div id="sidebar-container"></div>
+      <div id="header-container"></div> -->
+
+      <main
+        class="app-main m-xxl-2"
+        style="font-size: 3rem; text-align: center"
+      >
+        <div class="mb-3 text-center" style="font-size: 0.9rem">
+          <label for="anoInput" class="me-1">Ano:</label>
+          <input
+            type="number"
+            id="anoInput"
+            value="2025"
+            min="2000"
+            max="2100"
+            class="form-control d-inline-block form-control-sm"
+            style="width: 80px; margin-right: 10px"
+          />
+          <label for="agrupamentoInput" class="me-1">Agrupamento:</label>
+          <select
+            id="agrupamentoInput"
+            class="form-select d-inline-block form-select-sm w-auto me-2"
+          >
+            <option value="mes">Mês</option>
+            <option value="cliente">Cliente</option>
+            <option value="fornecedor">Fornecedor</option>
+            <option value="quadrimestre">Quadrimestre</option>
+            <option value="estacaoano">Estação Ano</option>
+            <option value="estacao">Estação</option>
+            <option value="tipo">Tipo</option>
+          </select>
+          <button id="btnCarregar" class="btn btn-primary btn-sm">
+            Carregar
+          </button>
+        </div>
+
+        <div id="dataGridContainer"></div>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../js/adminlte.js"></script>
+    <script src="../../../js/layout.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- <script src="../../../js/traducoes.js"></script> -->
+
+    <script>
+      $(document).ready(function () {
+        initPivotGrid(2025, "mes");
+
+        $("#btnCarregar").on("click", function () {
+          const ano = parseInt($("#anoInput").val(), 10);
+          const agrupamento = $("#agrupamentoInput").val();
+
+          initPivotGrid(ano, agrupamento);
+        });
+      });
+    </script>
+  </body>
+</html>

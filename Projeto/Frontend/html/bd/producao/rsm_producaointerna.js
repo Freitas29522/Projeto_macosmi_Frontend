@@ -1,0 +1,407 @@
+function initPivotGrid(anoSelecionado, agrupamento) {
+  const base = window.APP_CONFIG.API_BASE_URL + window.APP_CONFIG.API_PATH;
+  
+  const store = DevExpress.data.AspNet.createStore({
+    key:
+      agrupamento === "mes"
+        ? "MesNumero"
+        : agrupamento === "cliente"
+        ? "NomeCliente"
+        : agrupamento === "quadrimestre"
+        ? "NumeroQuadrimestre"
+        : agrupamento === "estacaoano"
+        ? "EstacaoAno"
+        : agrupamento === "estacao"
+        ? "Estacao"
+        : agrupamento === "tipo"
+        ? "Tipo"
+        : undefined,
+    loadUrl: `${base}/ProducaoInternaResumo?ano=${anoSelecionado}&groupBy=${agrupamento}`,
+  });
+
+  const baseColumns = [
+    agrupamento === "mes"
+      ? {
+          caption: "Mês",
+          dataField: "MesNumero",
+          customizeText: function (cellInfo) {
+            if (cellInfo.rowType === "totalFooter") return "TOTAL";
+            const nomesMeses = [
+              "",
+              "Janeiro",
+              "Fevereiro",
+              "Março",
+              "Abril",
+              "Maio",
+              "Junho",
+              "Julho",
+              "Agosto",
+              "Setembro",
+              "Outubro",
+              "Novembro",
+              "Dezembro",
+            ];
+            return nomesMeses[cellInfo.value];
+          },
+        }
+      : agrupamento === "cliente"
+      ? {
+          caption: "Cliente",
+          dataField: "NomeCliente",
+          customizeText: (cellInfo) =>
+            cellInfo.rowType === "totalFooter" ? "TOTAL" : cellInfo.value,
+        }
+      : agrupamento === "quadrimestre"
+      ? {
+          caption: "Quadrimestre",
+          dataField: "NomeQuadrimestre",
+          customizeText: (cellInfo) =>
+            cellInfo.rowType === "totalFooter" ? "TOTAL" : cellInfo.value,
+        }
+      : agrupamento === "estacaoano"
+      ? {
+          caption: "EstaçãoAno",
+          dataField: "EstacaoAno",
+          customizeText: (cellInfo) =>
+            cellInfo.rowType === "totalFooter" ? "TOTAL" : cellInfo.value,
+        }
+      : agrupamento === "estacao"
+      ? {
+          caption: "Estação",
+          dataField: "Estacao",
+          customizeText: (cellInfo) =>
+            cellInfo.rowType === "totalFooter" ? "TOTAL" : cellInfo.value,
+        }
+      : agrupamento === "tipo"
+      ? {
+          caption: "Tipo",
+          dataField: "Tipo",
+          customizeText: (cellInfo) =>
+            cellInfo.rowType === "totalFooter" ? "TOTAL" : cellInfo.value,
+        }
+      : {},
+
+    {
+      caption: "Pares",
+      alignment: "center",
+      columns: [
+        {
+          caption: "Cort",
+          dataField: "PrtCort",
+          dataType: "number",
+          format: { type: "fixedPoint", precision: 0 },
+          customizeText: (e) => (e.value === 0 ? "-" : e.valueText),
+        },
+        {
+          caption: "Cost",
+          dataField: "PrtCost",
+          dataType: "number",
+          format: { type: "fixedPoint", precision: 0 },
+          customizeText: (e) => (e.value === 0 ? "-" : e.valueText),
+        },
+        {
+          caption: "Mont",
+          dataField: "PrtMont",
+          dataType: "number",
+          format: { type: "fixedPoint", precision: 0 },
+          customizeText: (e) => (e.value === 0 ? "-" : e.valueText),
+        },
+        {
+          caption: "Acab",
+          dataField: "PrtAcab",
+          dataType: "number",
+          format: { type: "fixedPoint", precision: 0 },
+          customizeText: (e) => (e.value === 0 ? "-" : e.valueText),
+        },
+      ],
+    },
+    {
+      caption: "Minutos",
+      alignment: "center",
+      columns: [
+        {
+          caption: "Cort",
+          dataField: "MinCort",
+          dataType: "number",
+          format: { type: "fixedPoint", precision: 1 },
+          customizeText: (e) => (e.value === 0 ? "-" : e.valueText),
+        },
+        {
+          caption: "Cost",
+          dataField: "MinCost",
+          dataType: "number",
+          format: { type: "fixedPoint", precision: 1 },
+          customizeText: (e) => (e.value === 0 ? "-" : e.valueText),
+        },
+        {
+          caption: "Mont",
+          dataField: "MinMont",
+          dataType: "number",
+          format: { type: "fixedPoint", precision: 1 },
+          customizeText: (e) => (e.value === 0 ? "-" : e.valueText),
+        },
+        {
+          caption: "Acab",
+          dataField: "MinAcab",
+          dataType: "number",
+          format: { type: "fixedPoint", precision: 1 },
+          customizeText: (e) => (e.value === 0 ? "-" : e.valueText),
+        },
+        {
+          caption: "Total",
+          dataField: "TotalMin",
+          dataType: "number",
+          format: { type: "fixedPoint", precision: 1 },
+          customizeText: (e) => (e.value === 0 ? "-" : e.valueText),
+        },
+      ],
+    },
+    {
+      caption: "Minutos Pares",
+      alignment: "center",
+      columns: [
+        {
+          caption: "Cort",
+          dataField: "MPCort",
+          dataType: "number",
+          format: { type: "fixedPoint", precision: 2 },
+          customizeText: (e) => (e.value === 0 ? "-" : e.valueText),
+        },
+        {
+          caption: "Cost",
+          dataField: "MPCost",
+          dataType: "number",
+          format: { type: "fixedPoint", precision: 2 },
+          customizeText: (e) => (e.value === 0 ? "-" : e.valueText),
+        },
+        {
+          caption: "Mont",
+          dataField: "MPMont",
+          dataType: "number",
+          format: { type: "fixedPoint", precision: 2 },
+          customizeText: (e) => (e.value === 0 ? "-" : e.valueText),
+        },
+        {
+          caption: "Acab",
+          dataField: "MPAcab",
+          dataType: "number",
+          format: { type: "fixedPoint", precision: 2 },
+          customizeText: (e) => (e.value === 0 ? "-" : e.valueText),
+        },
+        {
+          caption: "Total",
+          dataField: "TotalMP",
+          dataType: "number",
+          format: { type: "fixedPoint", precision: 2 },
+          customizeText: (e) => (e.value === 0 ? "-" : e.valueText),
+        },
+      ],
+    },
+    {
+      caption: "Medias",
+      alignment: "center",
+      columns: [
+        {
+          caption: "Dias",
+          dataField: "DiasComProducao",
+          dataType: "number",
+          format: { type: "fixedPoint", precision: 0 },
+          customizeText: (e) => (e.value === 0 ? "-" : e.valueText),
+        },
+        {
+          caption: "Min/Dia",
+          dataField: "MediaMinDia",
+          dataType: "number",
+          format: { type: "fixedPoint", precision: 2 },
+          customizeText: (e) => (e.value === 0 ? "-" : e.valueText),
+        },
+        {
+          caption: "Pares/Dia",
+          dataField: "MediaParesDia",
+          dataType: "number",
+          format: { type: "fixedPoint", precision: 2 },
+          customizeText: (e) => (e.value === 0 ? "-" : e.valueText),
+        },
+      ],
+    },
+  ];
+
+  const columns = baseColumns;
+  const baseSummaryItems = [
+    {
+      column:
+        agrupamento === "mes"
+          ? "MesNumero"
+          : agrupamento === "cliente"
+          ? "NomeCliente"
+          : agrupamento === "quadrimestre"
+          ? "NomeQuadrimestre"
+          : agrupamento === "estacaoano"
+          ? "EstacaoAno"
+          : agrupamento === "estacao"
+          ? "Estacao"
+          : agrupamento === "tipo"
+          ? "Tipo"
+          : undefined,
+      summaryType: "count",
+      displayFormat: "TOTAL",
+      customizeText: () => "TOTAL",
+    },
+    {
+      column: "PrtCort",
+      summaryType: "sum",
+      valueFormat: { type: "fixedPoint", precision: 2 },
+      displayFormat: "{0}",
+    },
+    {
+      column: "PrtCost",
+      summaryType: "sum",
+      valueFormat: { type: "fixedPoint", precision: 2 },
+      displayFormat: "{0}",
+    },
+    {
+      column: "PrtMont",
+      summaryType: "sum",
+      valueFormat: { type: "fixedPoint", precision: 2 },
+      displayFormat: "{0}",
+    },
+    {
+      column: "PrtAcab",
+      summaryType: "sum",
+      valueFormat: { type: "fixedPoint", precision: 2 },
+      displayFormat: "{0}",
+    },
+    {
+      column: "MinCort",
+      summaryType: "sum",
+      valueFormat: { type: "fixedPoint", precision: 2 },
+      displayFormat: "{0}",
+    },
+    {
+      column: "MinCost",
+      summaryType: "sum",
+      valueFormat: { type: "fixedPoint", precision: 2 },
+      displayFormat: "{0}",
+    },
+    {
+      column: "MinMont",
+      summaryType: "sum",
+      valueFormat: { type: "fixedPoint", precision: 2 },
+      displayFormat: "{0}",
+    },
+    {
+      column: "MinAcab",
+      summaryType: "sum",
+      valueFormat: { type: "fixedPoint", precision: 2 },
+      displayFormat: "{0}",
+    },
+    {
+      column: "TotalMin",
+      summaryType: "sum",
+      valueFormat: { type: "fixedPoint", precision: 2 },
+      displayFormat: "{0}",
+    },
+    {
+      column: "MPCort",
+      summaryType: "sum",
+      valueFormat: { type: "fixedPoint", precision: 2 },
+      displayFormat: "{0}",
+    },
+    {
+      column: "MPCost",
+      summaryType: "sum",
+      valueFormat: { type: "fixedPoint", precision: 2 },
+      displayFormat: "{0}",
+    },
+    {
+      column: "MPMont",
+      summaryType: "sum",
+      valueFormat: { type: "fixedPoint", precision: 2 },
+      displayFormat: "{0}",
+    },
+    {
+      column: "MPAcab",
+      summaryType: "sum",
+      valueFormat: { type: "fixedPoint", precision: 2 },
+      displayFormat: "{0}",
+    },
+    {
+      column: "TotalMP",
+      summaryType: "sum",
+      valueFormat: { type: "fixedPoint", precision: 2 },
+      displayFormat: "{0}",
+    },
+    {
+      column: "DiasComProducao",
+      summaryType: "sum",
+      valueFormat: { type: "fixedPoint", precision: 2 },
+      displayFormat: "{0}",
+    },
+    {
+      column: "MediaMinDia",
+      summaryType: "avg",
+      valueFormat: { type: "fixedPoint", precision: 2 },
+      displayFormat: "{0}",
+    },
+    {
+      column: "MediaParesDia",
+      summaryType: "avg",
+      valueFormat: { type: "fixedPoint", precision: 2 },
+      displayFormat: "{0}",
+    },
+  ];
+
+  $("#dataGridContainer").dxDataGrid({
+    dataSource: store,
+    columns: columns,
+    showBorders: true,
+    columnAutoWidth: true,
+    wordWrapEnabled: true,
+    paging: {
+      pageSize: 20,
+    },
+    height: "80vh", //baixei de 80vh para 70vh
+
+    pager: {
+      showPageSizeSelector: true,
+      allowedPageSizes: [10, 20, 50],
+      showInfo: true,
+    },
+    headerFilter: {
+      visible: true,
+    },
+    sorting: {
+      mode: "multiple",
+    },
+    selection: {
+      mode: "single",
+    },
+    summary: {
+      totalItems: baseSummaryItems,
+    },
+    onCellPrepared: function (e) {
+      if (e.rowType === "totalFooter") {
+        e.cellElement.css({
+          "background-color": "#ececec",
+          "font-weight": "bold",
+          color: "#333",
+        });
+      }
+
+      const firstColumnFields = [
+        "MesNumero",
+        "NomeCliente",
+        "NomeQuadrimestre",
+        "Estacao",
+        "Tipo",
+      ];
+      if (e.column && firstColumnFields.includes(e.column.dataField)) {
+        e.cellElement.css({
+          "background-color": "#f9f4ef",
+          "font-weight": "bold",
+          color: "#3c3c3c",
+        });
+      }
+    },
+  });
+}
