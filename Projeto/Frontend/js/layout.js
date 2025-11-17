@@ -42,6 +42,7 @@ function loadHeaderAndSidebar() {
       document.getElementById("header-container").innerHTML = html;
 
 const btn = document.getElementById("btnRefresh");
+const base = window.APP_CONFIG.API_BASE_URL + window.APP_CONFIG.API_PATH;
 if (btn) {
   btn.addEventListener("click", async () => {
     try {
