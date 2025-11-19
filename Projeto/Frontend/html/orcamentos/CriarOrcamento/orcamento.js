@@ -254,7 +254,7 @@
         // 1) CLIENTE
         {
           dataField: "cliente",
-          caption: "Marca / Cliente",
+          caption: "Marca",
           width: "18%",
           minWidth: 160,
           hidingPriority: 6,

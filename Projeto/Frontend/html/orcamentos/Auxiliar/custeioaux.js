@@ -11,6 +11,12 @@
   const totalPct = (d) =>
     pct(d.pessoal) + pct(d.gerais) + pct(d.amortizacoes) + pct(d.financeiros);
 
+  DevExpress.config({
+    editorOptions: {
+      valueChangeEvent: "keyup input change",
+    },
+  });
+
   function renderChart() {
     const ds = [
       { name: "Pessoal", val: pct(dados?.pessoal) },
@@ -60,7 +66,7 @@
       items: [
         {
           itemType: "group",
-          caption: "MATÉRIAS",
+          caption: "MATÉRIAS Incremento",
           colSpan: 1,
           items: [
             {
@@ -290,9 +296,9 @@
     const anoSel = Number($("#anoInput").val());
     if (!anoSel) return;
     const conf = await DevExpress.ui.dialog.confirm(
-      `Criar orçamento de ${anoSel}? Se existir ${
-        anoSel - 1
-      }, os valores serão copiados.`,
+      `Criar orçamento de ${
+        anoSel + 1
+      }? Se existir ${anoSel}, os valores serão copiados.`,
       "Criar ano"
     );
     if (!conf) return;
