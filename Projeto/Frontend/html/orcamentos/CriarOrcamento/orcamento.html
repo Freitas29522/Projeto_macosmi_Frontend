@@ -66,13 +66,33 @@
 
   <div class="card shadow-sm"
        style="flex:1; min-height:0; display:flex; flex-direction:column;">
-        <div class="card-header fw-semibold">Linha(s) de Orçamento</div>
+
+    <!-- HEADER COM ANO + BOTÃO CARREGAR -->
+    <div class="card-header d-flex align-items-center gap-2">
+      <div class="fw-semibold">Linha(s) de Orçamento</div>
+
+      <div class="ms-auto d-flex align-items-center gap-2">
+        <label for="anoInput" class="fw-semibold mb-0">Ano:</label>
+        <input
+          type="number"
+          id="anoInput"
+          class="form-control form-control-sm"
+          style="width:120px"
+          min="2000"
+          max="2100"
+        />
+        <button id="btnCarregar" class="btn btn-outline-secondary btn-sm">
+          Carregar
+        </button>
+      </div>
+    </div>
 
     <div class="card-body" style="flex:1; min-height:0; overflow:hidden; padding:0;">
       <div id="dataGridContainer" style="height:100%;"></div>
     </div>
   </div>
 </div>
+
 
   </main>
     </div>

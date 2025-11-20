@@ -6,26 +6,35 @@
 
   DevExpress.localization.locale("pt");
 
+  // ano selecionado
+  let anoSelecionado = new Date().getFullYear();
+
   // ---------- Stores remotos (com pesquisa) ----------
   const clientesStore = DevExpress.data.AspNet.createStore({
     key: "Cod",
-    loadUrl: `${base}/Clientes`,
+    loadUrl: apiClientes,
   });
 
   const amostrasStore = DevExpress.data.AspNet.createStore({
     key: "CodigoReferencia",
-    loadUrl: `${base}/Amostras`,
+    loadUrl: apiAmostras,
   });
+
   // ---------- Helpers de editores com grid dentro ----------
   function clienteEditorOptions(e) {
     return {
       valueExpr: "Cod",
-      displayExpr: (item) => (item ? `${item.Cod} — ${item.Nome}` : ""),
+      displayExpr: (item) => {
+        if (!item) return "";
+        if (item.Sigla && item.Sigla.trim() !== "") {
+          return `${item.Cod} — ${item.Sigla}`;
+        }
+        return `${item.Cod} — ${item.Nome}`;
+      },
       showClearButton: true,
-      deferRendering: true, // só cria ao abrir
+      deferRendering: true,
       dropDownOptions: { width: 600 },
-      dataSource: clientesStore, // permite mostrar o valor atual
-
+      dataSource: clientesStore,
       contentTemplate: (dd) => {
         const $grid = $("<div>").appendTo(dd.component.content());
         $grid.dxDataGrid({
@@ -34,8 +43,8 @@
             paginate: true,
             pageSize: 20,
           },
-          remoteOperations: true, // servidor trata de tudo
-          scrolling: { mode: "virtual" }, // scroll infinito
+          remoteOperations: true,
+          scrolling: { mode: "virtual" },
           paging: { pageSize: 20 },
           pager: { visible: false },
           height: 300,
@@ -64,7 +73,6 @@
 
   function amostraEditorOptions(e) {
     return {
-      //dataSource: amostrasStore,
       valueExpr: "CodigoReferencia",
       displayExpr: (item) => (item ? `${item.CodigoReferencia}` : ""),
       showClearButton: true,
@@ -126,22 +134,45 @@
     };
   }
 
-  // ---------- DataSource do grid (igual ao teu) ----------
+  // ---------- DataSource do grid ----------
   const store = new DevExpress.data.CustomStore({
     key: "codigo",
-    load: () => fetch(api).then((r) => r.json()),
-    byKey: (key) =>
-      fetch(`${api}/${encodeURIComponent(key)}`).then((r) => r.json()), // <- ADD ISTO
 
-    insert: (values) =>
-      fetch(api, {
+    // carrega só o ano selecionado
+    load: () => {
+      if (!anoSelecionado) return [];
+      return fetch(`${api}/ano/${encodeURIComponent(anoSelecionado)}`).then(
+        async (r) => {
+          if (!r.ok) throw new Error(await r.text());
+          return r.json();
+        }
+      );
+    },
+
+    byKey: (key) =>
+      fetch(`${api}/${encodeURIComponent(key)}`).then((r) => r.json()),
+
+    insert: (values) => {
+      if (!anoSelecionado) {
+        return Promise.reject(
+          new Error("Seleciona primeiro um ano no topo da página.")
+        );
+      }
+
+      // garante que o AnoReferente vai para o backend
+      const payload = Object.assign({}, values, {
+        AnoReferente: anoSelecionado,
+      });
+
+      return fetch(api, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+        body: JSON.stringify(payload),
       }).then(async (r) => {
         if (!r.ok) throw new Error(await r.text());
         return r.json();
-      }),
+      });
+    },
 
     update: (key, values) =>
       fetch(`${api}/${encodeURIComponent(key)}`, {
@@ -202,7 +233,6 @@
         useIcons: true,
       },
       onToolbarPreparing: function (e) {
-        // remove o botão "+" padrão do DataGrid
         e.toolbarOptions.items = e.toolbarOptions.items.filter(
           (it) => it.name !== "addRowButton"
         );
@@ -212,25 +242,18 @@
         const $hdr = $card.find(".card-header");
         if (!$hdr.length) return;
 
-        // Garante layout flexível no header
-        $hdr.addClass("d-flex align-items-center justify-content-between");
-
-        // Cria o botão alinhado à direita
+        // já tens o botão de criar orçamento no header
         const $btn = $(`
-    <button id="btnCriarOrc" class="btn btn-primary btn-sm ms-auto">
-      <i class="bi bi-plus-circle me-1"></i>Criar orçamento
-    </button>
-  `);
+          <button id="btnCriarOrc" class="btn btn-primary btn-sm ms-2">
+            <i class="bi bi-plus-circle me-1"></i>Criar orçamento
+          </button>
+        `);
 
-        // Ação do botão
         $btn.on("click", () => e.component.addRow());
-
-        // Adiciona ao header
         $hdr.append($btn);
       },
 
       onRowUpdating: function (e) {
-        // junta os valores antigos com os novos → payload completo
         e.newData = Object.assign({}, e.oldData, e.newData);
       },
 
@@ -251,7 +274,6 @@
       },
 
       columns: [
-        // 1) CLIENTE
         {
           dataField: "cliente",
           caption: "Marca",
@@ -270,12 +292,21 @@
           },
           calculateDisplayValue: (row) => {
             if (!row?.cliente) return "";
-            return row.ClienteNome
-              ? `${row.cliente} — ${row.ClienteNome}`
-              : row.cliente;
+
+            // 1º tenta sigla
+            if (row.ClienteSigla && row.ClienteSigla.trim() !== "") {
+              return `${row.cliente} — ${row.ClienteSigla}`;
+            }
+
+            // se não tiver sigla, cai para o nome
+            if (row.ClienteNome && row.ClienteNome.trim() !== "") {
+              return `${row.cliente} — ${row.ClienteNome}`;
+            }
+
+            // fallback
+            return row.cliente;
           },
         },
-        // 2) REFª REPR
         {
           dataField: "referencia",
           caption: "Refª Repr",
@@ -314,7 +345,6 @@
             } catch {}
           },
         },
-        // 3) ARTIGO
         {
           dataField: "artigo",
           caption: "Artigo",
@@ -323,7 +353,6 @@
           hidingPriority: 5,
           validationRules: [{ type: "required" }],
         },
-        // 4) ESTAÇÃO
         {
           dataField: "estacao",
           caption: "Estação",
@@ -332,7 +361,6 @@
           alignment: "center",
           hidingPriority: 4,
         },
-        // 5) E 6) DATAS
         {
           caption: "Datas",
           alignment: "center",
@@ -356,7 +384,6 @@
             },
           ],
         },
-        // 7) PARES
         {
           dataField: "pares",
           caption: "Pares",
@@ -366,8 +393,16 @@
           format: { type: "fixedPoint", precision: 0 },
           hidingPriority: 3,
         },
-
-        // 8) PMV
+        {
+          dataField: "Stock",
+          caption: "Stock",
+          width: "7%",
+          minWidth: 90,
+          alignment: "right",
+          dataType: "number",
+          format: { type: "fixedPoint", precision: 0 },
+          hidingPriority: 3,
+        },
         {
           dataField: "pmv",
           caption: "PMV",
@@ -382,4 +417,19 @@
       ],
     })
     .dxDataGrid("instance");
+
+  // ---------- handlers do ano ----------
+  $(function () {
+    $("#anoInput").val(anoSelecionado);
+
+    $("#btnCarregar").on("click", () => {
+      const val = Number($("#anoInput").val());
+      if (!val) return;
+      anoSelecionado = val;
+      grid.getDataSource().reload();
+    });
+
+    // carrega logo o ano atual ao entrar
+    grid.getDataSource().reload();
+  });
 })();
