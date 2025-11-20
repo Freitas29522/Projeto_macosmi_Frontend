@@ -52,7 +52,7 @@
   function buildCapData() {
     const rowCC = { Rubrica: "PRODUÇÃO INTERNA — (C&C)" };
     const rowMA = { Rubrica: "PRODUÇÃO INTERNA — (M&A)" };
-    const rowIE = { Rubrica: "PRODUÇÃO INTERNA — (IE)" };
+    const rowIE = { Rubrica: "PRODUÇÃO Total — (IE)" };
     /* const rowTOT = {
       Rubrica: "PRODUÇÃO TOTAL PRODUTOS ACABADOS",
       _total: true,
