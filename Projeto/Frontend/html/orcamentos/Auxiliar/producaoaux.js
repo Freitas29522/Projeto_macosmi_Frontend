@@ -66,7 +66,7 @@
       /* rowTOT[m] = rowIE[m] */
     });
 
-    return [rowCC, rowMA, rowIE, /* rowTOT */];
+    return [rowCC, rowMA, rowIE /* rowTOT */];
   }
 
   function initGridCapacidade() {
@@ -281,7 +281,6 @@
       await gridCap.saveEditData();
     }
 
-
     const isUpdate = !!dados.codigo;
     const resp = await fetch(`${api}${isUpdate ? "/" + dados.codigo : ""}`, {
       method: isUpdate ? "PUT" : "POST",
@@ -310,10 +309,9 @@
   async function criarAno() {
     const anoSel = Number($("#anoInput").val());
     if (!anoSel) return;
+
     const conf = await DevExpress.ui.dialog.confirm(
-      `Criar produção de ${anoSel}? Se existir ${
-        anoSel - 1
-      }, os valores serão copiados.`,
+      `Criar produção de ${anoSel}? Os valores reais serão carregados para esse ano.`,
       "Criar ano"
     );
     if (!conf) return;
