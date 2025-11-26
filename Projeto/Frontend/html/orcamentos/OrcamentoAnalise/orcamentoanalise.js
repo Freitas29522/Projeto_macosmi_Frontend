@@ -97,6 +97,9 @@
               currency: "EUR",
               minimumFractionDigits: 2,
             },
+            headerCellTemplate(container) {
+              container.html("VOLUME<br>NEGÓCIO");
+            },
           },
           {
             dataField: "Comercializacao",
@@ -218,7 +221,7 @@
         alignment: "center",
         columns: [
           {
-            caption: "Desconto1",
+            caption: "Desc1",
             alignment: "center",
             columns: [
               {
@@ -232,7 +235,7 @@
                   minimumFractionDigits: 2,
                 },
               },
-              {
+              /* {
                 dataField: "Desconto1perc",
                 caption: "%",
                 dataType: "number",
@@ -240,11 +243,11 @@
                   type: "percent",
                   precision: 2,
                 },
-              },
+              }, */
             ],
           },
           {
-            caption: "Desconto2",
+            caption: "Desc2",
             alignment: "center",
             columns: [
               {
@@ -258,7 +261,7 @@
                   minimumFractionDigits: 2,
                 },
               },
-              {
+              /* {
                 dataField: "Desconto2perc",
                 caption: "%",
                 dataType: "number",
@@ -266,7 +269,7 @@
                   type: "percent",
                   precision: 2,
                 },
-              },
+              }, */
             ],
           },
         ],
@@ -280,7 +283,7 @@
         caption: "Comercialização",
         alignment: "center",
         columns: [
-          {
+          /* {
             dataField: "Comissaoperc",
             caption: "Comissão %",
             dataType: "number",
@@ -311,7 +314,7 @@
             dataField: "DiasPagamento",
             caption: "Dias Pag",
             dataType: "number",
-          },
+          }, */
           {
             caption: "Custos comercializacao (Eur/Par)",
             alignment: "center",
@@ -353,7 +356,7 @@
             caption: "Custo dos Materiais (Eur/Par)",
             alignment: "center",
             columns: [
-              {
+              /* {
                 dataField: "CustosMateriaisCort",
                 caption: "Corte",
                 dataType: "number",
@@ -372,7 +375,7 @@
                 dataField: "CustosMateriaisAcab",
                 caption: "Acab",
                 dataType: "number",
-              },
+              }, */
               {
                 dataField: "SomaCustosMateriais",
                 caption: "Soma",
@@ -384,7 +387,7 @@
             caption: "Custo dos Serviços (Eur/Par)",
             alignment: "center",
             columns: [
-              {
+              /* {
                 dataField: "CustosServicosCort",
                 caption: "Corte",
                 dataType: "number",
@@ -403,7 +406,7 @@
                 dataField: "CustosServicossAcab",
                 caption: "Acab",
                 dataType: "number",
-              },
+              }, */
               {
                 dataField: "SomaCustosServicos",
                 caption: "Soma",
@@ -446,7 +449,7 @@
             caption: "Tempos Produção (min)",
             alignment: "center",
             columns: [
-              {
+              /* {
                 dataField: "TemposProducaoCort",
                 caption: "Corte",
                 dataType: "number",
@@ -465,7 +468,7 @@
                 dataField: "TemposProducaoAcab",
                 caption: "Acab",
                 dataType: "number",
-              },
+              }, */
               {
                 dataField: "SomaTemposProducao",
                 caption: "Soma",
@@ -506,11 +509,11 @@
           },
         ],
       },
-      {
+      /* {
         dataField: "CustoEstrutura",
         caption: "Custo Estrutura (Eur/Par)",
         dataType: "number",
-      },
+      }, */
       {
         caption: "MRG Líquida",
         alignment: "center",
@@ -819,33 +822,36 @@
     if (!selectedCodigo) return;
 
     Swal.fire({
-        title: "Repor valores de origem?",
-        text: "Isto vai eliminar todas as alterações deste orçamento e voltar aos valores originais.",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Sim, repor",
-        cancelButtonText: "Cancelar",
-        didOpen: () => {
-            const container = document.querySelector('.swal2-container');
-            if (container) container.style.zIndex = 30000;
-        }
-    }).then(result => {
-        if (!result.isConfirmed) return;
+      title: "Repor valores de origem?",
+      text: "Isto vai eliminar todas as alterações deste orçamento e voltar aos valores originais.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sim, repor",
+      cancelButtonText: "Cancelar",
+      didOpen: () => {
+        const container = document.querySelector(".swal2-container");
+        if (container) container.style.zIndex = 30000;
+      },
+    }).then((result) => {
+      if (!result.isConfirmed) return;
 
-        $.ajax({
-            url: `${base}/orcamento-linha/${selectedCodigo}`,
-            method: "DELETE",
-            success: function () {
-                DevExpress.ui.notify("Parâmetros repostos para os valores de origem.", "success", 2000);
-                $("#dataGridContainer").dxDataGrid("instance").refresh();
-                popupParametros.hide();
-            },
-            error: function (err) {
-                console.error(err);
-                DevExpress.ui.notify("Erro ao repor parâmetros.", "error", 3000);
-            }
-        });
+      $.ajax({
+        url: `${base}/orcamento-linha/${selectedCodigo}`,
+        method: "DELETE",
+        success: function () {
+          DevExpress.ui.notify(
+            "Parâmetros repostos para os valores de origem.",
+            "success",
+            2000
+          );
+          $("#dataGridContainer").dxDataGrid("instance").refresh();
+          popupParametros.hide();
+        },
+        error: function (err) {
+          console.error(err);
+          DevExpress.ui.notify("Erro ao repor parâmetros.", "error", 3000);
+        },
+      });
     });
-}
-
+  }
 })(); // <-- fecha tudo
