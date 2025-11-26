@@ -263,7 +263,8 @@
     detalhe = d.ok ? await d.json() : null;
 
     ano = anoSel;
-    $("#anoInput").val(ano);
+    $("#anoInput").val(anoSel ); // Sugere automaticamente o próximo ano
+
     touched = false;
     setSaveEnabled(false);
 
@@ -307,31 +308,39 @@
   }
 
   async function criarAno() {
-    const anoSel = Number($("#anoInput").val());
-    if (!anoSel) return;
+  const anoBase =
+    (dados && dados.Ano) ||
+    Number($("#anoInput").val()) ||
+    new Date().getFullYear();
 
-    const conf = await DevExpress.ui.dialog.confirm(
-      `Criar produção de ${anoSel}? Os valores reais serão carregados para esse ano.`,
-      "Criar ano"
+  const anoNovo = anoBase + 1; 
+
+  const conf = await DevExpress.ui.dialog.confirm(
+    `Criar produção de ${anoNovo}? Os valores reais dos últimos 12 meses serão carregados para esse ano.`,
+    "Criar ano"
+  );
+  if (!conf) return;
+
+  const resp = await fetch(`${api}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ Ano: anoNovo }),
+  });
+
+  if (!resp.ok) {
+    DevExpress.ui.notify(
+      (await resp.text()) || "Falha ao criar.",
+      "error",
+      3000
     );
-    if (!conf) return;
-
-    const resp = await fetch(`${api}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ Ano: anoSel }),
-    });
-    if (!resp.ok) {
-      DevExpress.ui.notify(
-        (await resp.text()) || "Falha ao criar.",
-        "error",
-        3000
-      );
-      return;
-    }
-    DevExpress.ui.notify("Ano criado.", "success", 1500);
-    await carregar(anoSel);
+    return;
   }
+
+  DevExpress.ui.notify("Ano criado.", "success", 1500);
+
+  await carregar(anoNovo);
+}
+
 
   // boot
   $(function () {
