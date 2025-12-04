@@ -3,8 +3,8 @@
     window.APP_CONFIG.API_BASE_URL +
     window.APP_CONFIG.API_PATH +
     "/orcamento-producao";
-  let dados = null; // entidade editável (jancc, fevcc, …; janma, …; mediacc, mediama, custo_cc, custo_ma)
-  let detalhe = null; // DTO de /detalhe/{ano} -> inclui dias e totais
+  let dados = null; 
+  let detalhe = null; 
   let ano = new Date().getFullYear();
   let touched = false;
 
@@ -53,20 +53,14 @@
     const rowCC = { Rubrica: "PRODUÇÃO INTERNA — (C&C)" };
     const rowMA = { Rubrica: "PRODUÇÃO INTERNA — (M&A)" };
     const rowIE = { Rubrica: "PRODUÇÃO Total — (IE)" };
-    /* const rowTOT = {
-      Rubrica: "PRODUÇÃO TOTAL PRODUTOS ACABADOS",
-      _total: true,
-    }; */
 
     meses.forEach((m) => {
       rowCC[m] = getMesVal(dados, "cc", m);
       rowMA[m] = getMesVal(dados, "ma", m);
       rowIE[m] = getMesVal(dados, "ie", m);
-      // No teu modelo total de acabados segue a M&A (acabamento = saída final)
-      /* rowTOT[m] = rowIE[m] */
     });
 
-    return [rowCC, rowMA, rowIE /* rowTOT */];
+    return [rowCC, rowMA, rowIE];
   }
 
   function initGridCapacidade() {
@@ -78,7 +72,7 @@
       showBorders: true,
       columnAutoWidth: true,
       repaintChangesOnly: true,
-      rowAlternationEnabled: true,
+      rowAlternationEnabled: false,
       editing: { mode: "cell", allowUpdating: true },
       columns: [
         {
@@ -95,6 +89,7 @@
         ...meses.map((m) => ({
           dataField: m,
           caption: m,
+          width: "100%",
           dataType: "number",
           format: "#0",
           alignment: "right",
@@ -216,28 +211,41 @@
 
   // ====== Custos Subcontratação
   function initFormCustos() {
-    $("#formCustos").dxForm({
-      formData: dados,
-      labelLocation: "top",
-      colCountByScreen: { xs: 1, sm: 2 },
-      minColWidth: 220,
-      items: [
-        {
-          dataField: "mediacc",
-          label: { text: "Corte & Costura (C&C)" },
-          editorType: "dxNumberBox",
-          editorOptions: { min: 0, format: "#0.00' €'", showSpinButtons: true },
+  $("#formCustos").dxForm({
+    formData: dados,
+    labelLocation: "top",
+    colCount: 2,                // colunas no form todo
+    minColWidth: 100,           // se o ecrã for pequeno, quebra para 1 coluna
+    width: "100%",
+    items: [
+      {
+        dataField: "mediacc",
+        label: { text: "Corte & Costura (C&C)" },
+        editorType: "dxNumberBox",
+        editorOptions: {
+          min: 0,
+          format: "#0.00' €'",
+          showSpinButtons: true,
+          width: "100%",        // ocupa bem a coluna, não alarga o card
         },
-        {
-          dataField: "mediama",
-          label: { text: "Montagem & Acabamento (M&A)" },
-          editorType: "dxNumberBox",
-          editorOptions: { min: 0, format: "#0.00' €'", showSpinButtons: true },
+      },
+      {
+        dataField: "mediama",
+        label: { text: "Montagem & Acabamento (M&A)" },
+        editorType: "dxNumberBox",
+        editorOptions: {
+          min: 0,
+          format: "#0.00' €'",
+          showSpinButtons: true,
+          width: "100%",
         },
-      ],
-      onFieldDataChanged: markTouched,
-    });
-  }
+      },
+    ],
+    onFieldDataChanged: markTouched,
+  });
+}
+
+
 
   // ====== IO
   async function carregar(anoSel) {

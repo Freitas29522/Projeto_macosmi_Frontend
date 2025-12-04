@@ -14,6 +14,11 @@
 
     paging: { pageSize: 50 },
 
+    columnChooser: {
+      enabled: false,
+      mode: "select", // “dragAndDrop” também existe
+    },
+
     scrolling: {
       mode: "virtual",
       rowRenderingMode: "virtual",
@@ -144,7 +149,7 @@
                 dataType: "number",
                 format: {
                   type: "percent",
-                  precision: 2, // 2 casas decimais → 100.00%
+                  precision: 2,
                 },
               },
             ],
@@ -219,14 +224,18 @@
       {
         caption: "Descontos Comerciais",
         alignment: "center",
+        cssClass: "personalizado",
+        visible: false,
         columns: [
           {
             caption: "Desc1",
             alignment: "center",
+            cssClass: "personalizado",
             columns: [
               {
                 dataField: "Desconto1eur",
                 caption: "EUR",
+                cssClass: "personalizado",
                 dataType: "number",
                 alignment: "right",
                 format: {
@@ -235,15 +244,6 @@
                   minimumFractionDigits: 2,
                 },
               },
-              /* {
-                dataField: "Desconto1perc",
-                caption: "%",
-                dataType: "number",
-                format: {
-                  type: "percent",
-                  precision: 2,
-                },
-              }, */
             ],
           },
           {
@@ -261,15 +261,6 @@
                   minimumFractionDigits: 2,
                 },
               },
-              /* {
-                dataField: "Desconto2perc",
-                caption: "%",
-                dataType: "number",
-                format: {
-                  type: "percent",
-                  precision: 2,
-                },
-              }, */
             ],
           },
         ],
@@ -278,43 +269,13 @@
         dataField: "PMVLiquido",
         caption: "PMV LIQ.",
         dataType: "number",
+        visible: false,
       },
       {
         caption: "Comercialização",
         alignment: "center",
+        visible: false,
         columns: [
-          /* {
-            dataField: "Comissaoperc",
-            caption: "Comissão %",
-            dataType: "number",
-            format: {
-              type: "percent",
-              precision: 2,
-            },
-          },
-          {
-            dataField: "TransportPerc",
-            caption: "Transp %",
-            dataType: "number",
-            format: {
-              type: "percent",
-              precision: 2,
-            },
-          },
-          {
-            dataField: "DescontoPP",
-            caption: "Desc PP %",
-            dataType: "number",
-            format: {
-              type: "percent",
-              precision: 2,
-            },
-          },
-          {
-            dataField: "DiasPagamento",
-            caption: "Dias Pag",
-            dataType: "number",
-          }, */
           {
             caption: "Custos comercializacao (Eur/Par)",
             alignment: "center",
@@ -351,31 +312,12 @@
       {
         caption: "Materias",
         alignment: "center",
+        visible: false,
         columns: [
           {
             caption: "Custo dos Materiais (Eur/Par)",
             alignment: "center",
             columns: [
-              /* {
-                dataField: "CustosMateriaisCort",
-                caption: "Corte",
-                dataType: "number",
-              },
-              {
-                dataField: "CustosMateriaisCost",
-                caption: "Costura",
-                dataType: "number",
-              },
-              {
-                dataField: "CustosMateriaisMont",
-                caption: "Mont",
-                dataType: "number",
-              },
-              {
-                dataField: "CustosMateriaisAcab",
-                caption: "Acab",
-                dataType: "number",
-              }, */
               {
                 dataField: "SomaCustosMateriais",
                 caption: "Soma",
@@ -387,26 +329,6 @@
             caption: "Custo dos Serviços (Eur/Par)",
             alignment: "center",
             columns: [
-              /* {
-                dataField: "CustosServicosCort",
-                caption: "Corte",
-                dataType: "number",
-              },
-              {
-                dataField: "CustosServicosCost",
-                caption: "Costura",
-                dataType: "number",
-              },
-              {
-                dataField: "CustosServicosMont",
-                caption: "Mont",
-                dataType: "number",
-              },
-              {
-                dataField: "CustosServicossAcab",
-                caption: "Acab",
-                dataType: "number",
-              }, */
               {
                 dataField: "SomaCustosServicos",
                 caption: "Soma",
@@ -424,6 +346,7 @@
       {
         caption: "MRG Bruta",
         alignment: "center",
+        visible: false,
         columns: [
           {
             dataField: "MRGBrutaEur",
@@ -444,31 +367,12 @@
       {
         caption: "Transformação",
         alignment: "center",
+        visible: false,
         columns: [
           {
             caption: "Tempos Produção (min)",
             alignment: "center",
             columns: [
-              /* {
-                dataField: "TemposProducaoCort",
-                caption: "Corte",
-                dataType: "number",
-              },
-              {
-                dataField: "TemposProducaoCost",
-                caption: "Costura",
-                dataType: "number",
-              },
-              {
-                dataField: "TemposProducaoMont",
-                caption: "Mont",
-                dataType: "number",
-              },
-              {
-                dataField: "TemposProducaoAcab",
-                caption: "Acab",
-                dataType: "number",
-              }, */
               {
                 dataField: "SomaTemposProducao",
                 caption: "Soma",
@@ -509,14 +413,10 @@
           },
         ],
       },
-      /* {
-        dataField: "CustoEstrutura",
-        caption: "Custo Estrutura (Eur/Par)",
-        dataType: "number",
-      }, */
       {
         caption: "MRG Líquida",
         alignment: "center",
+        visible: false,
         columns: [
           {
             dataField: "MRGLiquidaEur",
@@ -623,7 +523,7 @@
 
           {
             itemType: "group",
-            caption: "Percentagens de Custeio",
+            caption: "Custeio",
             colSpan: 2,
             colCount: 3,
             items: [
@@ -644,12 +544,12 @@
               },
               {
                 dataField: "Cc",
-                label: { text: "CC (%)" },
+                label: { text: "CC" },
                 editorType: "dxNumberBox",
               },
               {
                 dataField: "Ma",
-                label: { text: "MA (%)" },
+                label: { text: "MA" },
                 editorType: "dxNumberBox",
               },
             ],
@@ -669,22 +569,22 @@
                     items: [
                       {
                         dataField: "M3",
-                        label: { text: "M3 Corte" },
+                        label: { text: "Corte" },
                         editorType: "dxNumberBox",
                       },
                       {
                         dataField: "M6",
-                        label: { text: "M6 Costura" },
+                        label: { text: "Costura" },
                         editorType: "dxNumberBox",
                       },
                       {
                         dataField: "M8",
-                        label: { text: "M8 Montagem" },
+                        label: { text: "Montagem" },
                         editorType: "dxNumberBox",
                       },
                       {
                         dataField: "M10",
-                        label: { text: "M10 Acab." },
+                        label: { text: "Acab." },
                         editorType: "dxNumberBox",
                       },
                     ],
@@ -700,22 +600,22 @@
                     items: [
                       {
                         dataField: "O3",
-                        label: { text: "O3 Corte" },
+                        label: { text: "Corte" },
                         editorType: "dxNumberBox",
                       },
                       {
                         dataField: "O6",
-                        label: { text: "O6 Costura" },
+                        label: { text: "Costura" },
                         editorType: "dxNumberBox",
                       },
                       {
                         dataField: "O8",
-                        label: { text: "O8 Montagem" },
+                        label: { text: "Montagem" },
                         editorType: "dxNumberBox",
                       },
                       {
                         dataField: "O10",
-                        label: { text: "O10 Acab." },
+                        label: { text: "Acab." },
                         editorType: "dxNumberBox",
                       },
                     ],
@@ -731,22 +631,22 @@
                     items: [
                       {
                         dataField: "T3",
-                        label: { text: "T3 Corte (min)" },
+                        label: { text: "Corte (min)" },
                         editorType: "dxNumberBox",
                       },
                       {
                         dataField: "T6",
-                        label: { text: "T6 Costura (min)" },
+                        label: { text: "Costura (min)" },
                         editorType: "dxNumberBox",
                       },
                       {
                         dataField: "T8",
-                        label: { text: "T8 Montagem (min)" },
+                        label: { text: "Montagem (min)" },
                         editorType: "dxNumberBox",
                       },
                       {
                         dataField: "T10",
-                        label: { text: "T10 Acab. (min)" },
+                        label: { text: "Acab. (min)" },
                         editorType: "dxNumberBox",
                       },
                     ],
@@ -854,4 +754,12 @@
       });
     });
   }
+
+  // === Botão "Escolher colunas" ===
+  $("#btnEscolherColunas").on("click", function () {
+    const grid = $("#dataGridContainer").dxDataGrid("instance");
+    if (grid) {
+      grid.showColumnChooser();
+    }
+  });
 })(); // <-- fecha tudo
