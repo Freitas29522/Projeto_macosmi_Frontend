@@ -3,10 +3,21 @@
   let popupParametros;
   let selectedCodigo = null;
 
+  const anoAtual = new Date().getFullYear();
+  $('#anoInput').val(anoAtual);
+
   $("#dataGridContainer").dxDataGrid({
     dataSource: DevExpress.data.AspNet.createStore({
       key: "codigo",
       loadUrl: `${base}/orcamento-previsoes`,
+      onBeforeSend(method, ajaxOptions) {
+        if (method === "load") {
+          const ano = $("#anoInput").val() || anoAtual;
+
+          ajaxOptions.data = ajaxOptions.data || {};
+          ajaxOptions.data.ano = ano;
+        }
+      }
     }),
 
     remoteOperations: true,
@@ -16,7 +27,7 @@
 
     columnChooser: {
       enabled: false,
-      mode: "select", // “dragAndDrop” também existe
+      mode: "select", 
     },
 
     scrolling: {
@@ -33,10 +44,127 @@
     showBorders: true,
 
     headerFilter: { visible: true },
-    filterPanel: { visible: true },
     filterRow: { visible: true },
 
     focusedRowEnabled: true,
+
+    /*  */
+
+        summary: {
+      recalculateWhileEditing: true,
+      totalItems: [
+        {
+          column: "cliente",
+          summaryType: "count",
+          showInColumn: "cliente",
+          displayFormat: "Total",
+          customizeText: function () {
+            return "Total";
+          },
+        },
+        // Pares
+        {
+          column: "pares",
+          summaryType: "sum",
+          valueFormat: {
+            type: "fixedPoint",
+            precision: 0,
+          },
+          displayFormat: "{0}",
+        },
+        // Volume de Negócios
+        {
+          column: "VolumeNegocios",
+          summaryType: "sum",
+          valueFormat: {
+            style: "currency",
+            currency: "EUR",
+            minimumFractionDigits: 2,
+          },
+          displayFormat: "{0}",
+        },
+        // Comercialização
+        {
+          column: "Comercializacao",
+          summaryType: "sum",
+          valueFormat: {
+            style: "currency",
+            currency: "EUR",
+            minimumFractionDigits: 2,
+          },
+          displayFormat: "{0}",
+        },
+        // Matérias
+        {
+          column: "Materias",
+          summaryType: "sum",
+          valueFormat: {
+            style: "currency",
+            currency: "EUR",
+            minimumFractionDigits: 2,
+          },
+          displayFormat: "{0}",
+        },
+        // Margem Bruta EUR
+        {
+          column: "MargemBrutaEur",
+          summaryType: "sum",
+          valueFormat: {
+            style: "currency",
+            currency: "EUR",
+            minimumFractionDigits: 2,
+          },
+          displayFormat: "{0}",
+        },
+        // Transformação C&C
+        {
+          column: "TransformacaoCC",
+          summaryType: "sum",
+          valueFormat: {
+            style: "currency",
+            currency: "EUR",
+            minimumFractionDigits: 2,
+          },
+          displayFormat: "{0}",
+        },
+        // Transformação M&A
+        {
+          column: "TransformacaoMA",
+          summaryType: "sum",
+          valueFormat: {
+            style: "currency",
+            currency: "EUR",
+            minimumFractionDigits: 2,
+          },
+          displayFormat: "{0}",
+        },
+        // Estrutura
+        {
+          column: "Estrutura",
+          summaryType: "sum",
+          valueFormat: {
+            style: "currency",
+            currency: "EUR",
+            minimumFractionDigits: 2,
+          },
+          displayFormat: "{0}",
+        },
+        // Margem Líquida EUR
+        {
+          column: "MargemLiquidaEur",
+          summaryType: "sum",
+          valueFormat: {
+            style: "currency",
+            currency: "EUR",
+            minimumFractionDigits: 2,
+          },
+          displayFormat: "{0}",
+        },
+      ],
+    },
+
+
+    /*  */
 
     columns: [
       {
@@ -760,6 +888,14 @@
     const grid = $("#dataGridContainer").dxDataGrid("instance");
     if (grid) {
       grid.showColumnChooser();
+    }
+  });
+
+  // === Botão "Carregar" (recarregar com o ano seleccionado) ===
+  $("#btnCarregar").on("click", function () {
+    const grid = $("#dataGridContainer").dxDataGrid("instance");
+    if (grid) {
+      grid.getDataSource().reload();
     }
   });
 })(); // <-- fecha tudo

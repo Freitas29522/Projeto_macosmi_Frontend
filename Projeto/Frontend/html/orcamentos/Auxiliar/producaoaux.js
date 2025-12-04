@@ -78,7 +78,7 @@
         {
           dataField: "Rubrica",
           caption: "Rubricas",
-          allowEditing: false,
+          allowEditing: false,  
           width: 320,
           cellTemplate: (c, v) => {
             const el = $("<div>").text(v.value);
