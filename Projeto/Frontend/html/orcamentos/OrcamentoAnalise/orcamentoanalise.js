@@ -212,7 +212,7 @@
         ],
       },
 
-      { dataField: "cliente", caption: "Cliente" },
+      { dataField: "sigla", caption: "Cliente" },
       { dataField: "artigo", caption: "Artigo" },
       { dataField: "estacao", caption: "Estação" },
       { dataField: "referencia", caption: "Referência" },
