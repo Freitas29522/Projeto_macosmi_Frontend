@@ -4,14 +4,18 @@ DevExpress.config({
   });
   
 
+window.applyNegativeClass = function(e) {
+  if (e.rowType === "data" || e.rowType === "totalFooter") {
+    if (typeof e.value === "number" && e.value < 0) {
+      e.cellElement.addClass("negativo");
+    }
+  }
+};
+
 DevExpress.ui.dxDataGrid.defaultOptions({
   options: {
     onCellPrepared: function (e) {
-      if (e.rowType === "data" || e.rowType === "totalFooter") {
-        if (typeof e.value === "number" && e.value < 0) {
-          e.cellElement.addClass("negativo");
-        }
-      }
+      window.applyNegativeClass(e);
     }
   }
 });

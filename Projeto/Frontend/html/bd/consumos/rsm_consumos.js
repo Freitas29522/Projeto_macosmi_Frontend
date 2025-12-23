@@ -401,6 +401,8 @@ function initPivotGrid(anoSelecionado, agrupamento) {
       totalItems: baseSummaryItems,
     },
     onCellPrepared: function (e) {
+      if (window.applyNegativeClass) window.applyNegativeClass(e);
+      
       if (e.rowType === "totalFooter") {
         e.cellElement.css({
           "background-color": "#ececec",

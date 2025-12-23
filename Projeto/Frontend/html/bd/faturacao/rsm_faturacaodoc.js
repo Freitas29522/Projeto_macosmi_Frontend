@@ -1,8 +1,7 @@
 // Inicialização do DataGrid para Faturação Resumo
 function initPivotGrid(anoSelecionado) {
-
   const base = window.APP_CONFIG.API_BASE_URL + window.APP_CONFIG.API_PATH;
-  
+
   const currencyFormat = {
     style: "currency",
     currency: "EUR",
@@ -192,6 +191,9 @@ function initPivotGrid(anoSelecionado) {
       ],
     },
     onCellPrepared: function (e) {
+      // garante que a regra global também corre aqui
+      if (window.applyNegativeClass) window.applyNegativeClass(e);
+
       if (e.rowType === "totalFooter") {
         e.cellElement.css({
           "background-color": "#ececec",
@@ -199,6 +201,7 @@ function initPivotGrid(anoSelecionado) {
           color: "#333",
         });
       }
+
       if (e.column && e.column.dataField === "NomeCliente") {
         e.cellElement.css({
           "background-color": "#f9f4ef",
