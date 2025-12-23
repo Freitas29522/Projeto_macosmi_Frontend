@@ -3,50 +3,15 @@ DevExpress.config({
     forceIsoDateParsing: true,
   });
   
-/*   DevExpress.localization.loadMessages('pt');
-  DevExpress.localization.locale('pt'); */
 
-
-/*   DevExpress.ui.dxDataGrid.defaultOptions({
+DevExpress.ui.dxDataGrid.defaultOptions({
   options: {
-    remoteOperations: true,
-      height: "90vh",
-
-      paging: {
-        pageSize: 50,
-      },
-
-      scrolling: {
-        mode: "virtual",
-        rowRenderingMode: "virtual",
-      },
-
-      allowColumnReordering: true,
-      allowColumnResizing: true,
-      columnResizingMode: "nextColumn",
-      columnMinWidth: 80,
-      columnAutoWidth: true,
-      columnHidingEnabled: false,
-      rowAlternationEnabled: true,
-      showBorders: true,
-
-      headerFilter: {
-        visible: true,
-      },
-
-      filterPanel: {
-        visible: true,
-      },
-
-      filterRow: {
-        visible: true,
-      },
-
-      focusedRowEnabled: true,
-
-      columnChooser: {
-        enabled: true,
-        mode: "select",
-      },
+    onCellPrepared: function (e) {
+      if (e.rowType === "data" || e.rowType === "totalFooter") {
+        if (typeof e.value === "number" && e.value < 0) {
+          e.cellElement.addClass("negativo");
+        }
+      }
+    }
   }
-}); */  
+});

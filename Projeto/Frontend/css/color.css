@@ -196,4 +196,13 @@
   --bs-form-invalid-border-color: #ea868f; /* Cor da borda para formulários inválidos */
 }
 
-  
+.dx-datagrid .negativo {
+  color: #c00000 !important;
+  font-weight: 600;
+}
+
+.dx-datagrid .negativo {
+  color: #c00000 !important;
+  font-weight: 700;
+  background: #fff1f1;
+}

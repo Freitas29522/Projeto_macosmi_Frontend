@@ -52,6 +52,28 @@
 
     <!-- Estilo principal -->
     <link rel="stylesheet" href="../../../css/adminlte.css" />
+
+    <style>
+      .editavel-card {
+        background-color: #f0f8ff; /* Azul muito claro */
+        /*  border-left: 5px solid #0d6efd; */ /* Azul Bootstrap */
+      }
+      .editavel-card .card-header,
+      .editavel-card .card-body {
+        background-color: inherit;
+      }
+      /* Faz o grid "transparente" para se ver o azul do card */
+      .editavel-card .dx-datagrid-headers,
+      .editavel-card .dx-datagrid-rowsview,
+      .editavel-card .dx-datagrid-total-footer,
+      .editavel-card .dx-datagrid {
+        background-color: transparent;
+      }
+      /* Destacar cells editáveis nas grids */
+      .dx-datagrid .dx-editor-cell {
+        background-color: #e8f2ff !important;
+      }
+    </style>
   </head>
 
   <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
@@ -77,7 +99,7 @@
     <div class="row g-4 align-items-start cards-grid">
     <!-- 1ª linha -->
     <div class="col-12 col-xl-7">
-      <div class="card h-100 shadow-sm">
+      <div class="card h-100 shadow-sm editavel-card">
         <div class="card-header fw-semibold text-start">
           Valores para Atualização das Fichas Técnicas/Custeio dos Artigos
         </div>
@@ -100,7 +122,7 @@
 
     <!-- 2ª linha -->
     <div class="col-12 col-xl-7">
-      <div class="card h-100 shadow-sm">
+      <div class="card h-100 shadow-sm editavel-card">
         <div class="card-header fw-semibold text-start">
           Cálculo dos Gastos por Natureza
         </div>
@@ -111,7 +133,7 @@
     </div>
 
     <div class="col-12 col-xl-5">
-      <div class="card h-100 shadow-sm">
+      <div class="card h-100 shadow-sm editavel-card">
         <div class="card-header fw-semibold text-start">
           Taxa de Gastos Financeiros com pagamento dos clientes
         </div>

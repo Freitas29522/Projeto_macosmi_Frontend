@@ -4,7 +4,7 @@
   let selectedCodigo = null;
 
   const anoAtual = new Date().getFullYear();
-  $('#anoInput').val(anoAtual);
+  $("#anoInput").val(anoAtual);
 
   $("#dataGridContainer").dxDataGrid({
     dataSource: DevExpress.data.AspNet.createStore({
@@ -17,7 +17,7 @@
           ajaxOptions.data = ajaxOptions.data || {};
           ajaxOptions.data.ano = ano;
         }
-      }
+      },
     }),
 
     remoteOperations: true,
@@ -27,7 +27,7 @@
 
     columnChooser: {
       enabled: false,
-      mode: "select", 
+      mode: "select",
     },
 
     scrolling: {
@@ -48,9 +48,7 @@
 
     focusedRowEnabled: true,
 
-    /*  */
-
-        summary: {
+    summary: {
       recalculateWhileEditing: true,
       totalItems: [
         {
@@ -72,6 +70,18 @@
           },
           displayFormat: "{0}",
         },
+        // PMV
+        {
+          column: "pmv",
+          summaryType: "avg",
+          valueFormat: {
+            type: "currency",
+            precision: 2,
+            currency: "EUR",
+          },
+          displayFormat: "{0}",
+        },
+
         // Volume de Negócios
         {
           column: "VolumeNegocios",
@@ -116,6 +126,17 @@
           },
           displayFormat: "{0}",
         },
+        // Margem Bruta perc
+        {
+          column: "MargemBrutaPerc",
+          summaryType: "avg",
+          valueFormat: {
+            type: "percent", 
+            precision: 2,
+          },
+          displayFormat: "{0}",
+        },
+
         // Transformação C&C
         {
           column: "TransformacaoCC",
@@ -160,9 +181,19 @@
           },
           displayFormat: "{0}",
         },
+        // Margem Líquida perc
+        {
+          column: "MargemLiquidaPerc",
+          summaryType: "avg",
+          valueFormat: {
+            type: "percent", // Altera de fixedPoint para percent
+            precision: 2,
+          },
+          displayFormat: "{0}",
+        },
+
       ],
     },
-
 
     /*  */
 
