@@ -1,5 +1,3 @@
-// /Projeto/Frontend/js/calendario.js
-
 (function () {
   // --- Calendário Laboral em Popup (DevExtreme) ------------------------------
   window.abrirtabelacalendario = function (anoInicial) {

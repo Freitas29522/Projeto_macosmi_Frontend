@@ -4,35 +4,47 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
-  
-    <!-- Ícones -->
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-  
-    <!-- Plugins e bibliotecas -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/styles/overlayscrollbars.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css" />
-  
-    <!-- Estilo principal -->
+
     <link rel="stylesheet" href="../css/adminlte.css" />
+
+    <!-- ✅ DevExtreme CSS no HEAD -->
+    <link rel="stylesheet" href="https://cdn3.devexpress.com/jslib/24.2.6/css/dx.material.blue.light.css" />
   </head>
-  
 
   <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
     <div class="app-wrapper">
-      
       <div id="sidebar-container"></div>
       <div id="header-container"></div>
-      
+
       <main class="app-main" style="justify-content: center; font-size: 3rem; text-align: center;">
         Em manutenção
       </main>
-    </div>    
+    </div>
+
+    <script src="/Projeto/Frontend/js/config.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- ✅ SweetAlert antes do layout (layout usa Swal) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="/Projeto/Frontend/js/security.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/browser/overlayscrollbars.global.min.js"></script>
+
+    <!-- ✅ DevExtreme JS -->
+    <script src="https://cdn3.devexpress.com/jslib/24.2.6/js/dx.all.js"></script>
+    <script src="https://cdn3.devexpress.com/jslib/24.2.6/js/localization/dx.messages.pt.js"></script>
+
     <script src="../js/adminlte.js"></script>
     <script src="../js/layout.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- ✅ Calendário por último -->
+    <script src="/Projeto/Frontend/html/Utilitario/calendario.js"></script>
   </body>
 </html>
