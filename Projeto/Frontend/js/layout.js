@@ -189,6 +189,7 @@ window.addEventListener("load", loadHeaderAndSidebar);
 function loadGlobalScripts() {
   const scripts = [
     "/Projeto/Frontend/js/config.js",
+    "/Projeto/Frontend/js/security.js",
     "/Projeto/Frontend/html/Utilitario/calendario.js",
   ];
 
