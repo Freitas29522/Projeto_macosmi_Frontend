@@ -12831,6 +12831,17 @@ textarea.form-control-lg {
   grid-area: lte-app-header;
 }
 
+/* Header sempre visível ao fazer scroll */
+#header-container,
+#header-container .app-header,
+#header-container .navbar,
+#header-container header {
+  position: sticky;
+  top: 0;
+  z-index: 1030; /* acima do conteúdo */
+}
+
+
 .app-main {
   grid-area: lte-app-main;
 }

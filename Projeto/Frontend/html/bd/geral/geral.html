@@ -149,15 +149,20 @@
   </body>
 </html>
 
-<!-- <script>
-  $(document).ready(function () {
-    initPivotGrid(2025, "mes");
-
-    $("#btnCarregar").on("click", function () {
-      const ano = parseInt($("#anoInput").val(), 10);
-      const agrupamento = $("#agrupamentoInput").val();
-
-      initPivotGrid(ano, agrupamento);
-    });
-  });
-</script> -->
+<style>
+  /* placeholder "Em desenvolvimento" quando o div do gráfico está vazio */
+  #grafico1:empty::before,
+  #grafico2:empty::before,
+  #grafico3:empty::before,
+  #grafico4:empty::before,
+  #grafico5:empty::before {
+    content: "Em desenvolvimento";
+    display: grid;
+    place-items: center;
+    height: 100%;
+    width: 100%;
+    font-size: 1.1rem;
+    font-weight: 600;
+    opacity: 0.65;
+  }
+</style>
