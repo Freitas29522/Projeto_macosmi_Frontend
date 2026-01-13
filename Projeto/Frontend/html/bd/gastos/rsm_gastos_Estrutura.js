@@ -1,6 +1,6 @@
 function initPivotGrid(anoSelecionado, agrupamento) {
   const base = window.APP_CONFIG.API_BASE_URL + window.APP_CONFIG.API_PATH;
-  
+
   const store = DevExpress.data.AspNet.createStore({
     key:
       agrupamento === "mes"
@@ -11,6 +11,11 @@ function initPivotGrid(anoSelecionado, agrupamento) {
         ? "ChaveTexto"
         : undefined,
     loadUrl: `${base}/GastosResumo?ano=${anoSelecionado}&groupBy=${agrupamento}`,
+    onBeforeSend: function (operation, ajaxOptions) {
+      const token = localStorage.getItem("token");
+      ajaxOptions.headers = ajaxOptions.headers || {};
+      if (token) ajaxOptions.headers["Authorization"] = `Bearer ${token}`;
+    },
   });
 
   const baseColumns = [
@@ -165,7 +170,7 @@ function initPivotGrid(anoSelecionado, agrupamento) {
       summaryType: "avg",
       valueFormat: { type: "fixedPoint", precision: 1 },
       displayFormat: "{0}",
-    }
+    },
   ];
 
   $("#dataGridContainer").dxDataGrid({
@@ -229,4 +234,4 @@ function initPivotGrid(anoSelecionado, agrupamento) {
       });
     },
   });
-}       
+}

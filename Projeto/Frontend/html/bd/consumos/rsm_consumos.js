@@ -1,7 +1,6 @@
 function initPivotGrid(anoSelecionado, agrupamento) {
-
   const base = window.APP_CONFIG.API_BASE_URL + window.APP_CONFIG.API_PATH;
-  
+
   const store = DevExpress.data.AspNet.createStore({
     key:
       agrupamento === "mes"
@@ -20,6 +19,11 @@ function initPivotGrid(anoSelecionado, agrupamento) {
         ? "Tipo"
         : undefined,
     loadUrl: `${base}/ConsumosResumo?ano=${anoSelecionado}&groupBy=${agrupamento}`,
+    onBeforeSend: function (operation, ajaxOptions) {
+      const token = localStorage.getItem("token");
+      ajaxOptions.headers = ajaxOptions.headers || {};
+      if (token) ajaxOptions.headers["Authorization"] = `Bearer ${token}`;
+    },
   });
 
   const baseColumns = [
@@ -402,7 +406,7 @@ function initPivotGrid(anoSelecionado, agrupamento) {
     },
     onCellPrepared: function (e) {
       if (window.applyNegativeClass) window.applyNegativeClass(e);
-      
+
       if (e.rowType === "totalFooter") {
         e.cellElement.css({
           "background-color": "#ececec",
@@ -477,19 +481,20 @@ function initPivotGrid(anoSelecionado, agrupamento) {
             currency: "EUR",
           },
         },
-         title: "Custos por " + agrupamento.charAt(0).toUpperCase() + agrupamento.slice(1),
+        title:
+          "Custos por " +
+          agrupamento.charAt(0).toUpperCase() +
+          agrupamento.slice(1),
         valueAxis: {
           title: "Valor (€)",
           label: { format: { type: "fixedPoint", precision: 0 } },
-         
-            type: 'logarithmic',
-            logarithmBase: 10
+
+          type: "logarithmic",
+          logarithmBase: 10,
         },
         argumentAxis: {
           title: agrupamento.charAt(0).toUpperCase() + agrupamento.slice(1),
         },
-
-       
       });
     },
   });
@@ -563,6 +568,9 @@ $(document).ready(function () {
 
   // Botão 1 abre rsm_faturacaodoc.html com ano 2025
   $("#btnSubContratosAnalise").on("click", function () {
-    abrirPopupComHtml("rsm_consumosmensal.html", { ano: 2025, agrupamento: "cliente" });
+    abrirPopupComHtml("rsm_consumosmensal.html", {
+      ano: 2025,
+      agrupamento: "cliente",
+    });
   });
 });

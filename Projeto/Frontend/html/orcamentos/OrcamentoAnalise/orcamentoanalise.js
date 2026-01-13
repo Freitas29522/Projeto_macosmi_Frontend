@@ -1,5 +1,6 @@
 (() => {
   const base = window.APP_CONFIG.API_BASE_URL + window.APP_CONFIG.API_PATH;
+
   let popupParametros;
   let selectedCodigo = null;
 
@@ -13,10 +14,14 @@
       onBeforeSend(method, ajaxOptions) {
         if (method === "load") {
           const ano = $("#anoInput").val() || anoAtual;
-
           ajaxOptions.data = ajaxOptions.data || {};
           ajaxOptions.data.ano = ano;
         }
+      },
+      onBeforeSend: function (operation, ajaxOptions) {
+        const token = localStorage.getItem("token");
+        ajaxOptions.headers = ajaxOptions.headers || {};
+        if (token) ajaxOptions.headers["Authorization"] = `Bearer ${token}`;
       },
     }),
 
@@ -131,7 +136,7 @@
           column: "MargemBrutaPerc",
           summaryType: "avg",
           valueFormat: {
-            type: "percent", 
+            type: "percent",
             precision: 2,
           },
           displayFormat: "{0}",
@@ -191,7 +196,6 @@
           },
           displayFormat: "{0}",
         },
-
       ],
     },
 

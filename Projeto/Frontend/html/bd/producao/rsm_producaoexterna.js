@@ -1,6 +1,6 @@
 function initPivotGrid(anoSelecionado, agrupamento) {
   const base = window.APP_CONFIG.API_BASE_URL + window.APP_CONFIG.API_PATH;
-  
+
   const store = DevExpress.data.AspNet.createStore({
     key:
       agrupamento === "mes"
@@ -17,6 +17,11 @@ function initPivotGrid(anoSelecionado, agrupamento) {
         ? "Tipo"
         : undefined,
     loadUrl: `${base}/ProducaoExternaResumo?ano=${anoSelecionado}&groupBy=${agrupamento}`,
+    onBeforeSend: function (operation, ajaxOptions) {
+      const token = localStorage.getItem("token");
+      ajaxOptions.headers = ajaxOptions.headers || {};
+      if (token) ajaxOptions.headers["Authorization"] = `Bearer ${token}`;
+    },
   });
 
   const baseColumns = [
@@ -478,37 +483,36 @@ function initPivotGrid(anoSelecionado, agrupamento) {
 
     onContentReady: function (e) {
       let data = e.component.getDataSource().items();
-      
-      const camposMA = ["PrtCort",
-"PrtCost",
-"PrtMont",
-"PrtAcab",
-"MinCort",
-"MinCost",
-"MinMont",
-"MinAcab",
-"TotalMin",
-"MPCort",
-"MPCost",
-"MPMont",
-"MPAcab",
-"EURCort",
-"EURCost",
-"EURMont",
-"EURAcab",
-"TotalLiq",
-"EurParCort",
-"EurParCost",
-"EurParMont",
-"EurParAcab",
-];
+
+      const camposMA = [
+        "PrtCort",
+        "PrtCost",
+        "PrtMont",
+        "PrtAcab",
+        "MinCort",
+        "MinCost",
+        "MinMont",
+        "MinAcab",
+        "TotalMin",
+        "MPCort",
+        "MPCost",
+        "MPMont",
+        "MPAcab",
+        "EURCort",
+        "EURCost",
+        "EURMont",
+        "EURAcab",
+        "TotalLiq",
+        "EurParCort",
+        "EurParCost",
+        "EurParMont",
+        "EurParAcab",
+      ];
 
       camposMA.forEach((campo) => {
         const allZero = data.every((row) => row[campo] === 0);
         e.component.columnOption(campo, "visible", !allZero);
       });
     },
-
-
   });
 }

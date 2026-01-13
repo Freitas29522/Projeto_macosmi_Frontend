@@ -1,6 +1,6 @@
 function initPivotGrid(anoSelecionado, agrupamento) {
   const base = window.APP_CONFIG.API_BASE_URL + window.APP_CONFIG.API_PATH;
-  
+
   const store = DevExpress.data.AspNet.createStore({
     key:
       agrupamento === "mes"
@@ -11,6 +11,11 @@ function initPivotGrid(anoSelecionado, agrupamento) {
         ? "ChaveTexto"
         : undefined,
     loadUrl: `${base}/GastosResumo?ano=${anoSelecionado}&groupBy=${agrupamento}`,
+    onBeforeSend: function (operation, ajaxOptions) {
+      const token = localStorage.getItem("token");
+      ajaxOptions.headers = ajaxOptions.headers || {};
+      if (token) ajaxOptions.headers["Authorization"] = `Bearer ${token}`;
+    },
   });
 
   const baseColumns = [
@@ -330,21 +335,21 @@ function initPivotGrid(anoSelecionado, agrupamento) {
           caption: "Eur C&C",
           dataField: "TotalFinalEurCC",
           dataType: "number",
-          format: { type: "currency", currency: "EUR", precision: 0},
+          format: { type: "currency", currency: "EUR", precision: 0 },
           customizeText: (e) => (e.value === 0 ? "-" : e.valueText),
         },
         {
           caption: "Eur M&A",
           dataField: "TotalFinalEurMA",
           dataType: "number",
-          format: { type: "currency", currency: "EUR", precision: 0},
+          format: { type: "currency", currency: "EUR", precision: 0 },
           customizeText: (e) => (e.value === 0 ? "-" : e.valueText),
         },
         {
           caption: "Custos Estrutura",
           dataField: "TotalFinalCustosEstrutura",
           dataType: "number",
-          format: { type: "currency", currency: "EUR", precision: 0},
+          format: { type: "currency", currency: "EUR", precision: 0 },
           customizeText: (e) => (e.value === 0 ? "-" : e.valueText),
         },
       ],
@@ -689,7 +694,6 @@ function initPivotGrid(anoSelecionado, agrupamento) {
     },
   });
 }
-
 
 function abrirPopupComHtml(arquivoHtml, parametros = {}) {
   let screenWidth = window.innerWidth;

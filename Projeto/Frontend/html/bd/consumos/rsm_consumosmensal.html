@@ -28,10 +28,9 @@
 
     <!-- Configuração DevExpress -->
     <script src="../../../devexpress/devexpress.js"></script>
-
+    <script src="/Projeto/Frontend/js/config.js" defer></script>
+    <script src="/Projeto/Frontend/js/security.js" defer></script>
     <script src="rsm_consumomensal.js" defer></script>
-
-    <script src="/Projeto/Frontend/js/config.js"></script>
 
     <!--LAYOUT-->
     <!-- Ícones -->
@@ -56,7 +55,7 @@
 
   <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
     <div class="app-wrapper">
-<!--       <div id="sidebar-container"></div>
+      <!--       <div id="sidebar-container"></div>
       <div id="header-container"></div> -->
 
       <main
@@ -75,14 +74,14 @@
             style="width: 80px; margin-right: 10px"
           />
           <label for="agrupamentoInput" class="me-1">Agrupamento:</label>
-            <select
-              id="agrupamentoInput"
-              class="form-select d-inline-block form-select-sm w-auto me-2"
-            >
-              <option value="cliente">Cliente</option>
-              <option value="amostra">Amostra</option>
-              <option value="encomenda">Encomenda</option>
-            </select>
+          <select
+            id="agrupamentoInput"
+            class="form-select d-inline-block form-select-sm w-auto me-2"
+          >
+            <option value="cliente">Cliente</option>
+            <option value="amostra">Amostra</option>
+            <option value="encomenda">Encomenda</option>
+          </select>
           <button id="btnCarregar" class="btn btn-primary btn-sm">
             Carregar
           </button>
@@ -98,16 +97,16 @@
     <!-- <script src="../../../js/traducoes.js"></script> -->
 
     <script>
-  $(document).ready(function () {
-    initPivotGrid(2025, "cliente");
+      $(document).ready(function () {
+        initPivotGrid(2025, "cliente");
 
-    $("#btnCarregar").on("click", function () {
-      const ano = parseInt($("#anoInput").val(), 10);
-      const agrupamento = $("#agrupamentoInput").val();
+        $("#btnCarregar").on("click", function () {
+          const ano = parseInt($("#anoInput").val(), 10);
+          const agrupamento = $("#agrupamentoInput").val();
 
-      initPivotGrid(ano, agrupamento);
-    });
-  });
-</script>
+          initPivotGrid(ano, agrupamento);
+        });
+      });
+    </script>
   </body>
 </html>

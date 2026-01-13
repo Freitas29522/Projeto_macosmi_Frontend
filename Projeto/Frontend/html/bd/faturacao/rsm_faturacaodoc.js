@@ -53,6 +53,11 @@ function initPivotGrid(anoSelecionado) {
         3000
       );
     },
+    onBeforeSend: function (operation, ajaxOptions) {
+      const token = localStorage.getItem("token");
+      ajaxOptions.headers = ajaxOptions.headers || {};
+      if (token) ajaxOptions.headers["Authorization"] = `Bearer ${token}`;
+    },
   });
 
   const columns = [

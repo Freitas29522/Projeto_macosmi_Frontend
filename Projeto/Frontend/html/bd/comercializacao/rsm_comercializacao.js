@@ -1,8 +1,6 @@
 function initPivotGrid(anoSelecionado, agrupamento) {
-
   const base = window.APP_CONFIG.API_BASE_URL + window.APP_CONFIG.API_PATH;
 
-  
   const store = DevExpress.data.AspNet.createStore({
     key:
       agrupamento === "mes"
@@ -19,6 +17,11 @@ function initPivotGrid(anoSelecionado, agrupamento) {
         ? "Estacao"
         : undefined,
     loadUrl: `${base}/ComercializacaoResumo?ano=${anoSelecionado}&groupBy=${agrupamento}`,
+    onBeforeSend: function (operation, ajaxOptions) {
+      const token = localStorage.getItem("token");
+      ajaxOptions.headers = ajaxOptions.headers || {};
+      if (token) ajaxOptions.headers["Authorization"] = `Bearer ${token}`;
+    },
   });
 
   const baseColumns = [
