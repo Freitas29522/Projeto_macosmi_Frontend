@@ -299,44 +299,44 @@ function initPivotGrid(anoSelecionado, agrupamento) {
     {
       column: "EurCC",
       summaryType: "sum",
-      valueFormat: { type: "fixedPoint", precision: 2 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "EurMM",
       summaryType: "sum",
-      valueFormat: { type: "fixedPoint", precision: 2 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "TotalEur",
       summaryType: "sum",
-      valueFormat: { type: "fixedPoint", precision: 2 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "EurParCC",
       summaryType: "avg",
-      valueFormat: { type: "fixedPoint", precision: 2 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "EurParMM",
       summaryType: "avg",
-      valueFormat: { type: "fixedPoint", precision: 2 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "EurMinCC",
       summaryType: "avg",
-      valueFormat: { type: "fixedPoint", precision: 2 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
 
     {
       column: "EurMinMM",
       summaryType: "avg",
-      valueFormat: { type: "fixedPoint", precision: 2 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
   ];

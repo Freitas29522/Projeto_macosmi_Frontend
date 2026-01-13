@@ -94,7 +94,7 @@ function initPivotGrid(anoSelecionado, agrupamento) {
           caption: "Pares",
           dataField: "ParesAcabamento",
           dataType: "number",
-          format: { type: "currency", currency: "EUR", precision: 0 },
+          format: { type: "fixedPoint", precision: 0 },
           customizeText: (e) => (e.value === 0 ? "-" : e.valueText),
         },
         {
@@ -198,37 +198,37 @@ function initPivotGrid(anoSelecionado, agrupamento) {
     {
       column: "EurosMontagem",
       summaryType: "sum",
-      valueFormat: { type: "fixedPoint", precision: 0 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "EurosAcabamento",
       summaryType: "sum",
-      valueFormat: { type: "fixedPoint", precision: 0 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "SomaEurMA",
       summaryType: "sum",
-      valueFormat: { type: "fixedPoint", precision: 0 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "MinParMA",
       summaryType: "avg",
-      valueFormat: { type: "fixedPoint", precision: 2 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "EurMinMA",
       summaryType: "avg",
-      valueFormat: { type: "fixedPoint", precision: 3 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "EurParMA",
       summaryType: "avg",
-      valueFormat: { type: "fixedPoint", precision: 2 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
   ];
@@ -243,7 +243,7 @@ function initPivotGrid(anoSelecionado, agrupamento) {
       pageSize: 50,
     },
     height: "80vh", //baixei de 80vh para 70vh
-    width: "70%", //testes de largura
+    width: "100%", //testes de largura
 
     headerFilter: {
       visible: true,

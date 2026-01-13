@@ -279,61 +279,61 @@ function initPivotGrid(anoSelecionado, agrupamento) {
     {
       column: "ValorProdutos",
       summaryType: "sum",
-      valueFormat: { type: "fixedPoint", precision: 0 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "vAlorServicos",
       summaryType: "sum",
-      valueFormat: { type: "fixedPoint", precision: 0 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "TotalValor",
       summaryType: "sum",
-      valueFormat: { type: "fixedPoint", precision: 0 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "VlrCM",
       summaryType: "sum",
-      valueFormat: { type: "fixedPoint", precision: 0 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "VlrTP",
       summaryType: "sum",
-      valueFormat: { type: "fixedPoint", precision: 0 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "VlrRY",
       summaryType: "sum",
-      valueFormat: { type: "fixedPoint", precision: 0 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "VlrPP",
       summaryType: "sum",
-      valueFormat: { type: "fixedPoint", precision: 0 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "VlrPG",
       summaryType: "sum",
-      valueFormat: { type: "fixedPoint", precision: 0 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "VlrOC",
       summaryType: "sum",
-      valueFormat: { type: "fixedPoint", precision: 0 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "SomaEur",
       summaryType: "sum",
-      valueFormat: { type: "fixedPoint", precision: 0 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
 
@@ -387,6 +387,8 @@ function initPivotGrid(anoSelecionado, agrupamento) {
       totalItems: baseSummaryItems,
     },
     onCellPrepared: function (e) {
+      if (window.applyNegativeClass) window.applyNegativeClass(e);
+      
       if (e.rowType === "totalFooter") {
         e.cellElement.css({
           "background-color": "#ececec",

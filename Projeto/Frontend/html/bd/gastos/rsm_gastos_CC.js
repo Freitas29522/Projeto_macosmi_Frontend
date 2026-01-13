@@ -196,37 +196,37 @@ function initPivotGrid(anoSelecionado, agrupamento) {
     {
       column: "EurosCorte",
       summaryType: "sum",
-      valueFormat: { type: "fixedPoint", precision: 0 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "EurosCostura",
       summaryType: "sum",
-      valueFormat: { type: "fixedPoint", precision: 0 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "SomaEurCC",
       summaryType: "sum",
-      valueFormat: { type: "fixedPoint", precision: 0 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "MinParCC",
       summaryType: "avg",
-      valueFormat: { type: "fixedPoint", precision: 2 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "EurMinCC",
       summaryType: "avg",
-      valueFormat: { type: "fixedPoint", precision: 3 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "EurParCC",
       summaryType: "avg",
-      valueFormat: { type: "fixedPoint", precision: 2 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
   ];
@@ -241,7 +241,7 @@ function initPivotGrid(anoSelecionado, agrupamento) {
       pageSize: 50,
     },
     height: "80vh", //baixei de 80vh para 70vh
-    width: "70%", //testes de largura
+    width: "100%", //testes de largura
 
     headerFilter: {
       visible: true,

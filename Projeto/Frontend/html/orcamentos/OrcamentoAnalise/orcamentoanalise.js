@@ -11,17 +11,18 @@
     dataSource: DevExpress.data.AspNet.createStore({
       key: "codigo",
       loadUrl: `${base}/orcamento-previsoes`,
-      onBeforeSend(method, ajaxOptions) {
-        if (method === "load") {
-          const ano = $("#anoInput").val() || anoAtual;
+      onBeforeSend: function (operation, ajaxOptions) {
+        // 1) adicionar o ano na query (só no load)s
+        if (operation === "load") {
+          const ano = $("#anoInput").val() || new Date().getFullYear();
           ajaxOptions.data = ajaxOptions.data || {};
           ajaxOptions.data.ano = ano;
         }
-      },
-      onBeforeSend: function (operation, ajaxOptions) {
+
+        // 2) adicionar Authorization
         const token = localStorage.getItem("token");
         ajaxOptions.headers = ajaxOptions.headers || {};
-        if (token) ajaxOptions.headers["Authorization"] = `Bearer ${token}`;
+        if (token) ajaxOptions.headers.Authorization = `Bearer ${token}`;
       },
     }),
 

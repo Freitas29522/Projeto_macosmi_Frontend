@@ -77,14 +77,14 @@ function initPivotGrid(anoSelecionado, agrupamento) {
               caption: "Euros",
               dataField: "TotalValorFaturado",
               dataType: "number",
-              format: { type: "fixedPoint", precision: 2 },
+              format: { type: "currency", currency: "EUR", precision: 0 },
               customizeText: (e) => (e.value === 0 ? "-" : e.valueText),
             },
             {
               caption: "PMV",
               dataField: "PMV",
               dataType: "number",
-              format: { type: "fixedPoint", precision: 2 },
+              format: { type: "currency", currency: "EUR", precision: 0 },
               customizeText: (e) => (e.value === 0 ? "-" : e.valueText),
             },
           ],
@@ -111,7 +111,7 @@ function initPivotGrid(anoSelecionado, agrupamento) {
               caption: "%s/Vnd",
               dataField: "IndicadoresVnd",
               dataType: "number",
-              format: { type: "currency", currency: "EUR", precision: 1 },
+              format: { type: "percent", precision: 0 },
               customizeText: (e) => (e.value === 0 ? "-" : e.valueText),
             },
           ],
@@ -144,31 +144,31 @@ function initPivotGrid(anoSelecionado, agrupamento) {
     {
       column: "TotalValorFaturado",
       summaryType: "sum",
-      valueFormat: { type: "fixedPoint", precision: 0 },
+      valueFormat: { style: "currency", currency: "EUR" }, 
       displayFormat: "{0}",
     },
     {
       column: "PMV",
       summaryType: "avg",
-      valueFormat: { type: "fixedPoint", precision: 2 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "CustosEstrutura",
       summaryType: "sum",
-      valueFormat: { type: "fixedPoint", precision: 0 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "IndicadoresEurPar",
       summaryType: "avg",
-      valueFormat: { type: "fixedPoint", precision: 2 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "IndicadoresVnd",
       summaryType: "avg",
-      valueFormat: { type: "fixedPoint", precision: 1 },
+      valueFormat: { style: "percent", precision: 2 }, 
       displayFormat: "{0}",
     },
   ];
@@ -183,7 +183,7 @@ function initPivotGrid(anoSelecionado, agrupamento) {
       pageSize: 50,
     },
     height: "80vh", //baixei de 80vh para 70vh
-    width: "70%", //testes de largura
+    width: "100%", //testes de largura
 
     headerFilter: {
       visible: true,

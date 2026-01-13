@@ -177,13 +177,13 @@ function initPivotGrid(anoSelecionado, agrupamento) {
     {
       column: "PrcCC",
       summaryType: "sum",
-      valueFormat: { type: "fixedPoint", precision: 2 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "VarCC",
       summaryType: "sum",
-      valueFormat: { type: "fixedPoint", precision: 2 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
@@ -195,13 +195,13 @@ function initPivotGrid(anoSelecionado, agrupamento) {
     {
       column: "PrcMM",
       summaryType: "sum",
-      valueFormat: { type: "fixedPoint", precision: 2 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
       column: "VarMM",
       summaryType: "sum",
-      valueFormat: { type: "fixedPoint", precision: 2 },
+      valueFormat: { style: "currency", currency: "EUR" },
       displayFormat: "{0}",
     },
     {
