@@ -11,7 +11,4 @@
     API_BASE_URL: isLocal ? LOCAL_API : PROD_API,
     API_PATH: "/api"
   };
-
-  console.log("🌍 Ambiente:", isLocal ? "Desenvolvimento" : "Produção");
-  console.log("🔗 API Base:", window.APP_CONFIG.API_BASE_URL);
 })();
