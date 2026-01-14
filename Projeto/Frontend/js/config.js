@@ -1,6 +1,6 @@
 (function () {
   const LOCAL_API = "https://localhost:44311";
-  const PROD_API  = "https://api.tuaempresa.pt";
+  const PROD_API  = "http://192.168.1.54:81";
 
   const isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
 
