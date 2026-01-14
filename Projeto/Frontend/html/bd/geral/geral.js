@@ -387,6 +387,31 @@ function initTop10PaisesClientes({ targetId = "#grafico5" } = {}) {
   });
 }
 
+function carregarKPIsGerais() {
+  const base = getBaseApi();
+
+  // Quando ligares endpoints, trocas estas URLs 👇
+  const endpoints = {
+    faturacao: `${base}/KPI/FaturacaoMes`,
+    pares: `${base}/KPI/ParesMes`,
+    clientes: `${base}/KPI/NovosClientesMes`,
+    encomendas: `${base}/KPI/EncomendasMes`
+  };
+
+  $("#kpi-faturacao").text("—");
+  $("#kpi-pares").text("—");
+  $("#kpi-clientes").text("—");
+  $("#kpi-encomendas").text("—");
+
+  // PRONTO para ligar APIs mais tarde 👇
+  /*
+  $.getJSON(endpoints.faturacao, r => $("#kpi-faturacao").text(r.valor + " €"));
+  $.getJSON(endpoints.pares, r => $("#kpi-pares").text(r.valor));
+  $.getJSON(endpoints.clientes, r => $("#kpi-clientes").text(r.valor));
+  $.getJSON(endpoints.encomendas, r => $("#kpi-encomendas").text(r.valor));
+  */
+}
+
 
 $(function () {
   const esperarPorTokenEConfig = () => {
@@ -428,6 +453,8 @@ $(function () {
 
     // Mapa: Clientes por país
     initMapaClientesPorPais({ targetId: "#grafico4" });
+
+    carregarKPIsGerais();
   };
 
   esperarPorTokenEConfig();

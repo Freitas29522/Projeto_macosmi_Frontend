@@ -63,40 +63,35 @@
       <div id="sidebar-container"></div>
       <div id="header-container"></div>
       <main class="app-main m-xxl-2 text-center">
-        <!-- BOTÕES -->
-        <div class="mt-2 d-flex flex-wrap justify-content-center gap-2 w-100">
-          <button
-            id="btnResumoFaturacao"
-            class="btn btn-secundary py-3 px-4 d-flex flex-column align-items-center flex-fill"
-            style="min-width: 120px"
-          >
-            <i class="bi bi-file-earmark-text-fill display-6 mb-1"></i>
-            <span class="fw-semibold fs-6">Detalhes</span>
-          </button>
-          <button
-            id="btn1"
-            class="btn btn-secundary py-3 px-4 d-flex flex-column align-items-center flex-fill"
-            style="min-width: 120px"
-          >
-            <i class="bi bi-clipboard2-data-fill display-6 mb-1"></i>
-            <span class="fw-semibold fs-6">Detalhes</span>
-          </button>
-          <button
-            id="btn2"
-            class="btn btn-secundary py-3 px-4 d-flex flex-column align-items-center flex-fill"
-            style="min-width: 120px"
-          >
-            <i class="bi bi-clipboard2-data-fill display-6 mb-1"></i>
-            <span class="fw-semibold fs-6">Detalhes</span>
-          </button>
-          <button
-            id="btn3"
-            class="btn btn-secundary py-3 px-4 d-flex flex-column align-items-center flex-fill"
-            style="min-width: 120px"
-          >
-            <i class="bi bi-clipboard2-data-fill display-6 mb-1"></i>
-            <span class="fw-semibold fs-6">Detalhes</span>
-          </button>
+        <!-- KPIs -->
+        <div class="row g-3 mt-2 mx-0">
+          <div class="col-12 col-md-6 col-xl-3">
+            <div class="bg-white shadow-sm rounded p-3 text-center">
+              <div class="text-muted">💰 Faturação do mês</div>
+              <div id="kpi-faturacao" class="display-6 fw-bold">—</div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-xl-3">
+            <div class="bg-white shadow-sm rounded p-3 text-center">
+              <div class="text-muted">👟 Pares produzidos</div>
+              <div id="kpi-pares" class="display-6 fw-bold">—</div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-xl-3">
+            <div class="bg-white shadow-sm rounded p-3 text-center">
+              <div class="text-muted">👥 Novos clientes</div>
+              <div id="kpi-clientes" class="display-6 fw-bold">—</div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-xl-3">
+            <div class="bg-white shadow-sm rounded p-3 text-center">
+              <div class="text-muted">📦 Encomendas</div>
+              <div id="kpi-encomendas" class="display-6 fw-bold">—</div>
+            </div>
+          </div>
         </div>
 
         <!-- LINHA DE 3 GRÁFICOS -->
@@ -144,7 +139,6 @@
                 >
                   Clientes por País
                 </div>
-
               </div>
 
               <select
