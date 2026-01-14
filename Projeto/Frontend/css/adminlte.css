@@ -15344,3 +15344,40 @@ html.maximized-card {
   .dx-form-group-caption { font-size: 0.85rem; }
   .dx-field-item-label-text { font-size: 0.8rem; }
 }
+
+
+/* Card por cima do vídeo */
+.lock-card {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 22px;
+}
+
+/* Nome do utilizador com bom contraste */
+.lockscreen .lockscreen-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111;
+}
+
+/* Ajustes do bloco do input dentro do card */
+.lockscreen .lockscreen-item {
+  background: transparent; /* já tens o card por trás */
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+/* Input mais visível */
+.lockscreen .lockscreen-credentials .form-control {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+
+/* Botão com contraste */
+.lockscreen .lockscreen-credentials .btn {
+  border-radius: 14px;
+  border: 1px solid #ddd;
+  background: #fff;
+}
