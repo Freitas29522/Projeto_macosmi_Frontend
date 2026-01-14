@@ -1,0 +1,15 @@
+# Vídeos pesados
+*.mp4
+*.webm
+*.mov
+*.mkv
+
+# Imagens muito grandes (se quiseres)
+*.psd
+*.tiff
+*.raw
+
+# Cache / lixo
+node_modules/
+.DS_Store
+Thumbs.db
