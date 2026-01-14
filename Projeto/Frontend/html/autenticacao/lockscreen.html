@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -33,41 +33,55 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="../../css/adminlte.css" />
-    
   </head>
 
-
   <body class="lockscreen bg-body-secondary">
-
     <!-- VÍDEO DE FUNDO -->
-<video autoplay muted loop id="background-video">
-  <source src="../../assets/MACOSMI - SHOE FACTORY.mp4" type="video/mp4" />
-  O teu browser não suporta vídeo em HTML5.
-</video>
-
+    <video autoplay muted loop id="background-video">
+      <source src="../../assets/MACOSMI - SHOE FACTORY.mp4" type="video/mp4" />
+      O teu browser não suporta vídeo em HTML5.
+    </video>
 
     <div class="lockscreen-wrapper">
       <div class="lockscreen-logo">
-        <img src="../../assets/MACOSMI_LOGO_25_new.png" alt="Logo" style="width: auto; height: auto;" />
+        <img
+          src="../../assets/MACOSMI_LOGO_25_new.png"
+          alt="Logo"
+          style="width: auto; height: auto"
+        />
       </div>
 
-      <div class="lockscreen-name" id="utilizadorNome"><!-- Alexandre Freitas --></div>
+      <div class="lockscreen-name" id="utilizadorNome">
+        <!-- Alexandre Freitas -->
+      </div>
       <div class="lockscreen-item">
         <div class="lockscreen-image">
           <img src="../../assets/Imagem_perfil.png" alt="User Image" />
         </div>
         <div class="lockscreen-credentials">
           <div class="input-group">
-            <input type="password" class="form-control shadow-none" id="reauthPassword" placeholder="Password" data-translate-placeholder="loginPassword" />  
-              <button type="button" class="btn shadow-none" onclick="reauthenticate()">
-                <i class="bi bi-box-arrow-right text-body-secondary"></i>
-              </button>
+            <input
+              type="password"
+              class="form-control shadow-none"
+              id="reauthPassword"
+              placeholder="Password"
+              data-translate-placeholder="loginPassword"
+            />
+            <button
+              type="button"
+              class="btn shadow-none"
+              onclick="reauthenticate()"
+            >
+              <i class="bi bi-box-arrow-right text-body-secondary"></i>
+            </button>
           </div>
         </div>
       </div>
-      <p class="text-center"><a href="#" class="recuperar-password" data-translate="trocarUtilizador">Trocar Utilizador!</a></p>
-
-
+      <p class="text-center">
+        <a href="#" class="recuperar-password" data-translate="trocarUtilizador"
+          >Trocar Utilizador!</a
+        >
+      </p>
     </div>
     <!--begin::Third Party Plugin(OverlayScrollbars)-->
     <script
@@ -91,19 +105,21 @@
     <script src="../../js/adminlte.js"></script>
     <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
 
-        <script src="/Projeto/Frontend/js/config.js"></script>
+    <script src="/Projeto/Frontend/js/config.js"></script>
 
-        
     <script>
-      const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';
+      const SELECTOR_SIDEBAR_WRAPPER = ".sidebar-wrapper";
       const Default = {
-        scrollbarTheme: 'os-theme-light',
-        scrollbarAutoHide: 'leave',
+        scrollbarTheme: "os-theme-light",
+        scrollbarAutoHide: "leave",
         scrollbarClickScroll: true,
       };
-      document.addEventListener('DOMContentLoaded', function () {
+      document.addEventListener("DOMContentLoaded", function () {
         const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
-        if (sidebarWrapper && typeof OverlayScrollbarsGlobal?.OverlayScrollbars !== 'undefined') {
+        if (
+          sidebarWrapper &&
+          typeof OverlayScrollbarsGlobal?.OverlayScrollbars !== "undefined"
+        ) {
           OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
             scrollbars: {
               theme: Default.scrollbarTheme,
@@ -118,55 +134,69 @@
     <script src="../../js/traducoes.js"></script>
 
     <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const nome = localStorage.getItem("nome");
-    if (nome) {
-      document.getElementById("utilizadorNome").textContent = nome;
-    }
-  });
+      document.addEventListener("DOMContentLoaded", function () {
+        const nome = localStorage.getItem("nome");
+        if (nome) {
+          document.getElementById("utilizadorNome").textContent = nome;
+        }
 
-  async function reauthenticate() {
-    const email = localStorage.getItem("email");
-    const password = document.getElementById("reauthPassword").value;
+        const input = document.getElementById("reauthPassword");
 
-    if (!email || !password) {
-      alert("Faltam dados para autenticar.");
-      return;
-    }
+        // cursor automático na password
+        input.focus();
 
-    const base = window.APP_CONFIG.API_BASE_URL + window.APP_CONFIG.API_PATH;
+        // Enter para desbloquear
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") reauthenticate();
+        });
+      });
 
-    const response = await fetch(`${base}/autenticar`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
-    });
+      async function reauthenticate() {
+        const email = localStorage.getItem("email");
+        const password = document.getElementById("reauthPassword").value;
 
-    if (response.ok) {
-      const data = await response.json();
-      localStorage.setItem("token", data.token);
-      window.location.href = "../bd/geral/geral.html";
-    } else {
-      alert("Password incorreta!");
-    }
-  }
-</script>
+        if (!email || !password) {
+          alert("Faltam dados para autenticar.");
+          return;
+        }
+
+        const base =
+          window.APP_CONFIG.API_BASE_URL + window.APP_CONFIG.API_PATH;
+
+        const response = await fetch(`${base}/autenticar`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          localStorage.setItem("token", data.token);
+
+          const redirect = sessionStorage.getItem("postLoginRedirect");
+          sessionStorage.removeItem("postLoginRedirect");
+
+          window.location.href = redirect || "../bd/geral/geral.html";
+        } else {
+          alert("Password incorreta!");
+        }
+      }
+    </script>
   </body>
 </html>
 
 <style>
-#background-video {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  min-width: 100vw;
-  min-height: 100vh;
-  transform: translate(-50%, -50%);
-  object-fit: cover;
-  object-position: center;
-  z-index: -1;
-  opacity: 0.6;
-  pointer-events: none;
-}
-
+  #background-video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100vw;
+    min-height: 100vh;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    object-position: center;
+    z-index: -1;
+    opacity: 1;
+    pointer-events: none;
+  }
 </style>

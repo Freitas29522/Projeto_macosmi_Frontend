@@ -21,6 +21,55 @@
     return;
   }
 
+  // ---------------- AUTO-LOCK POR INATIVIDADE ----------------
+  const LOCKSCREEN_PAGE = "/Projeto/Frontend/html/autenticacao/lockscreen.html";
+  const IDLE_MINUTES = 5; // ajusta aqui
+
+  function forceLock() {
+    // remove só o token (mantém nome/email para o lockscreen mostrar)
+    localStorage.removeItem("token");
+
+    // opcional: guardar para onde estava para voltar depois do unlock
+    sessionStorage.setItem("postLoginRedirect", window.location.href);
+
+    // manda para lockscreen
+    window.location.replace(LOCKSCREEN_PAGE);
+  }
+
+  function startIdleLock() {
+    if (isPublicPage()) return;
+
+    let idleTimer;
+    let lastReset = 0;
+
+    const reset = () => {
+      const now = Date.now();
+      if (now - lastReset < 1000) return; // máx 1 vez por segundo
+      lastReset = now;
+
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(forceLock, IDLE_MINUTES * 60 * 1000);
+    };
+
+    window.addEventListener("storage", (e) => {
+      if (e.key === TOKEN_KEY && e.newValue === null && !isPublicPage()) {
+        window.location.replace(LOCKSCREEN_PAGE);
+      }
+    });
+
+    ["click", "mousemove", "keydown", "scroll", "touchstart"].forEach((evt) => {
+      document.addEventListener(evt, reset, { passive: true });
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) reset();
+    });
+
+    reset();
+  }
+
+  startIdleLock();
+
   // ---------------- FETCH INTERCEPTOR ----------------
   const _fetch = window.fetch.bind(window);
   window.fetch = async (input, init = {}) => {
@@ -79,15 +128,14 @@
   };
 
   function forceLogout() {
-  localStorage.removeItem("token");
-  // se quiseres também:
-   localStorage.removeItem("nome");
-   localStorage.removeItem("email");
+    localStorage.removeItem("token");
+    // se quiseres também:
+    localStorage.removeItem("nome");
+    localStorage.removeItem("email");
 
-  sessionStorage.setItem("postLoginRedirect", window.location.href);
-  window.location.replace(LOGIN_PAGE);
-}
-
+    sessionStorage.setItem("postLoginRedirect", window.location.href);
+    window.location.replace(LOGIN_PAGE);
+  }
 
   // ---------------- jQuery global setup (extra safe) ----------------
   if (window.jQuery) {

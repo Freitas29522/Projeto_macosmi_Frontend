@@ -73,7 +73,9 @@
                   placeholder="Email"
                   required
                 />
-                <label for="loginEmail" data-translate="loginEmail">Email</label>
+                <label for="loginEmail" data-translate="loginEmail"
+                  >Email</label
+                >
               </div>
               <div class="input-group-text"><i class="bi bi-envelope"></i></div>
             </div>
@@ -86,7 +88,9 @@
                   placeholder="Password"
                   required
                 />
-                <label for="loginPassword" data-translate="loginPassword">Password</label>
+                <label for="loginPassword" data-translate="loginPassword"
+                  >Password</label
+                >
               </div>
               <div class="input-group-text">
                 <i class="bi bi-lock-fill"></i>
@@ -155,7 +159,9 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content text-center">
           <div class="modal-header bg-danger text-white">
-            <h5 class="modal-title w-100" id="loginErrorLabel">Erro no Login</h5>
+            <h5 class="modal-title w-100" id="loginErrorLabel">
+              Erro no Login
+            </h5>
             <button
               type="button"
               class="btn-close"
@@ -165,7 +171,8 @@
           </div>
           <div class="modal-body">
             <p>
-              Credenciais inválidas. Por favor, verifique o seu email e password.
+              Credenciais inválidas. Por favor, verifique o seu email e
+              password.
             </p>
           </div>
           <div class="modal-footer justify-content-center">
@@ -182,12 +189,13 @@
     </div>
 
     <!-- FUNÇÃO LOGIN -->
-    <script>    
+    <script>
       async function login() {
         const email = document.getElementById("loginEmail").value;
         const password = document.getElementById("loginPassword").value;
 
-        const base = window.APP_CONFIG.API_BASE_URL + window.APP_CONFIG.API_PATH;
+        const base =
+          window.APP_CONFIG.API_BASE_URL + window.APP_CONFIG.API_PATH;
 
         const response = await fetch(`${base}/autenticar`, {
           method: "POST",
@@ -202,10 +210,36 @@
           localStorage.setItem("email", data.email);
           window.location.href = "../bd/geral/geral.html";
         } else {
-          const modal = new bootstrap.Modal(document.getElementById("loginErrorModal"));
+          const modal = new bootstrap.Modal(
+            document.getElementById("loginErrorModal")
+          );
           modal.show();
         }
       }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const email = document.getElementById("loginEmail");
+        const password = document.getElementById("loginPassword");
+
+        // cursor automático no email
+        email.focus();
+
+        // Enter no email → passa para password
+        email.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            password.focus();
+          }
+        });
+
+        // Enter na password → faz login
+        password.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            login();
+          }
+        });
+      });
     </script>
   </body>
 </html>
