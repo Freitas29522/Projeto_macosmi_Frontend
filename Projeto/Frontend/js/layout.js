@@ -100,18 +100,15 @@ if (btn) {
   console.warn("Não encontrei #btnRefresh no header!");
 }
 
-      // ✅ SÓ aqui o DOM do header está disponível — agora podemos definir o nome
       const nome = localStorage.getItem("nome");
       if (nome) {
         const span = document.getElementById("nomeUtilizador");
         if (span) span.textContent = nome;
 
-        // ✅ Também atualiza o <p> do dropdown com o cargo
         const pCargo = document.getElementById("nomeCargo");
-        if (pCargo) pCargo.textContent = `${nome} - Contablista`;
+        if (pCargo) pCargo.textContent = `${nome}`;
       }
 
-      // ✅ AQUI: Associar o evento ao botão "Sair"
       const botaoSair = document.getElementById("botaoSair");
       if (botaoSair) {
         botaoSair.addEventListener("click", function (e) {
@@ -127,7 +124,6 @@ if (btn) {
       if (botaoSuspender) {
         botaoSuspender.addEventListener("click", function (e) {
           e.preventDefault();
-          // Apaga o token, mas mantém os outros dados
           localStorage.removeItem("token");
           window.location.href = "../.././autenticacao/lockscreen.html"; // página onde só pedes a password
         });
